@@ -12,7 +12,7 @@
         :margin="[10, 10]"
         :use-css-transforms="true"
         >
-    <GridItem v-for="item in layout"
+    <GridItem v-for="(item, index) in layout"
                    :x="item.x"
                    :y="item.y"
                    :w="item.w"
@@ -22,6 +22,7 @@
                    style="background: lightblue;"
                    >
             {{item.i}}
+            <CloseButton :index="index" :layout="layout"></CloseButton>
     </GridItem>
     </GridLayout>
     </div>
@@ -29,12 +30,14 @@
 
 <script>
 import VueGridLayout from 'vue-grid-layout';
+import CloseButton from './CloseButton.vue'
 export default {
   name: 'Grid',
   props: [ 'layout' ],
   components: {
       GridLayout: VueGridLayout.GridLayout,
-      GridItem: VueGridLayout.GridItem
+      GridItem: VueGridLayout.GridItem,
+      CloseButton: CloseButton
   }
 }
 </script>
