@@ -21,9 +21,13 @@
                    :key="item.i"
                    style="background: lightblue;"
                    >
-            {{item.i}}
+            <div v-if="item.type === 'time'">
+              <TimeWidget></TimeWidget>
+            </div>
+            <div v-else-if="item.type === 'default'">
+              {{ item.i }}
+            </div>
             <CloseButton :index="index" :layout="layout"></CloseButton>
-
     </GridItem>
     </GridLayout>
     </div>
@@ -31,14 +35,16 @@
 
 <script>
 import VueGridLayout from 'vue-grid-layout';
-import CloseButton from './CloseButton.vue'
+import CloseButton from './CloseButton.vue';
+import TimeWidget from './TimeWidget.vue';
 export default {
   name: 'Grid',
   props: [ 'layout' ],
   components: {
       GridLayout: VueGridLayout.GridLayout,
       GridItem: VueGridLayout.GridItem,
-      CloseButton: CloseButton
+      CloseButton: CloseButton,
+      TimeWidget: TimeWidget
   }
 }
 </script>
