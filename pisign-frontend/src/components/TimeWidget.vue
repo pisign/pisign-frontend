@@ -1,11 +1,16 @@
 <template>
-  <div>
+  <div class="display-datetime">
     <br>
     <p>{{ time }}</p>
     <p>{{ date }}</p>
   </div>
 </template>
 
+<style>
+  .display-datetime {
+    overflow-wrap: break-word;
+  }
+</style>
 <script>
 export default {
   name: 'TimeWidget',
