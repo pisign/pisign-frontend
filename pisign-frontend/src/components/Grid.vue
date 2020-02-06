@@ -23,6 +23,7 @@
                    >
             {{item.i}}
             <CloseButton :index="index" :layout="layout"></CloseButton>
+
     </GridItem>
     </GridLayout>
     </div>
