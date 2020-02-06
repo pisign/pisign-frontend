@@ -9,12 +9,8 @@
   },
   "dependencies": {
     "core-js": "^3.4.4",
-<<<<<<< HEAD
     "vue": "^2.6.10",
     "vue-grid-layout": "^2.3.7"
-=======
-    "vue": "^2.6.10"
->>>>>>> b02948cfe8dfe4dbcf9d26553aea05849d6ffbb2
   },
   "devDependencies": {
     "@vue/cli-plugin-babel": "^4.1.0",
