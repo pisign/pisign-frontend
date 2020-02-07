@@ -1,9 +1,17 @@
 <template>
-  <div class="display-datetime">
-    <br>
-    <p>{{ time }}</p>
-    <p>{{ date }}</p>
-  </div>
+  <v-container>
+    <v-row></v-row>
+    <v-row class="text-center">
+      <v-col cols="12">
+        <p class="mb-0">{{ time }}</p>
+      </v-col>
+    </v-row>
+    <v-row class="text-center">
+      <v-col cols="12">
+        <p class="mb-0">{{ date }}</p>
+      </v-col>
+    </v-row>
+  </v-container>
 </template>
 
 <style>
