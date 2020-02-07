@@ -1,13 +1,12 @@
 <template>
   <v-container>
-    <v-row></v-row>
     <v-row class="text-center">
-      <v-col cols="12">
+      <v-col cols="12" class="pa-0">
         <p class="mb-0">{{ time }}</p>
       </v-col>
     </v-row>
     <v-row class="text-center">
-      <v-col cols="12">
+      <v-col cols="12" class="pa-0">
         <p class="mb-0">{{ date }}</p>
       </v-col>
     </v-row>

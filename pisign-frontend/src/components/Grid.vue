@@ -25,17 +25,18 @@
                      :key="item.i"
                      style="background: lightblue;"
                      >
-              <div v-if="item.type === 'time'">
-                <TimeWidget></TimeWidget>
-              </div>
-              <div v-else-if="item.type === 'default'">
-                <v-row class="text-center">
-                  <v-col cols="12">
-                    {{ item.i }}
-                  </v-col>
-                </v-row>
-              </div>
-              <CloseButton :index="index" :layout="layout"></CloseButton>
+        <CloseButton :index="index" :layout="layout"></CloseButton>
+
+        <div v-if="item.type === 'time'">
+          <TimeWidget></TimeWidget>
+        </div>
+        <div v-else-if="item.type === 'default'">
+          <v-row class="text-center">
+            <v-col cols="12">
+              {{ item.i }}
+            </v-col>
+          </v-row>
+        </div>
       </GridItem>
     </GridLayout>
   </v-container>

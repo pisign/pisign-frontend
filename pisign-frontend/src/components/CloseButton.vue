@@ -1,21 +1,24 @@
 <template>
-    <button class="close-button" aria-label="Close" v-on:click="close">
-      <span class="material-icons close-icon">close</span>
-    </button>
+  <v-col cols="12" class="align-start pa-0">
+    <v-btn icon aria-label="Close" @click="close">
+      <v-icon small dark class="material-icons close-icon">close</v-icon>
+    </v-btn>
+  </v-col>
 </template>
 <style>
 .close-button{
-  position:absolute;
-  top: 0;
-  right: 0;
-  width: 16px;
-  height: 16px;
+  top: 0 !important;
+  right: 0px !important;
+  width: 16px !important;
+  height: 16px !important;
   background-color: transparent;
   border-color: transparent;
   text-align:center;
 }
 .close-icon{
   font-size: 16px;
+  padding-left:0px;
+  padding-right:0px;
 }
 </style>
 <script>
