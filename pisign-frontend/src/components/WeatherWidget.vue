@@ -53,8 +53,8 @@ export default {
         ws = null;
     }
     ws.onerror = function() {
-        this.api = "N/A";
-        this.id = "N/A";
+        that.api = "N/A";
+        that.id = "N/A";
     }
   }
 }
