@@ -4,8 +4,22 @@
       <v-toolbar-title>PiSign</v-toolbar-title>
     </v-app-bar>
     <v-content>
-      <Grid :layout="layout"></Grid>
+      <v-sheet>
+        <Grid :layout="layout"></Grid>
+        <v-btn
+          color="pink"
+          dark
+          fixed
+          bottom
+          right
+          fab
+          @click="addWidget"
+        >
+          <v-icon>mdi-plus</v-icon>
+        </v-btn>
+      </v-sheet>
     </v-content>
+
   </v-app>
 </template>
 
@@ -29,6 +43,12 @@ export default {
   data: function() {
     return {
       layout: testLayout
+    }
+  },
+  methods: {
+    addWidget : function() {
+      const key = this.layout.length.toString();
+      this.layout.push({"x":0,"y":0,"w":2,"h":4,"i":key, "type": "default"})
     }
   }
 }
