@@ -1,10 +1,5 @@
 <template>
   <v-container>
-    <v-row class="text-center">
-      <v-col cols="12">
-        <h1>Grid</h1>
-      </v-col>
-    </v-row>
     <GridLayout
         :layout.sync="layout"
         :col-num="12"

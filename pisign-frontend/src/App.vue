@@ -1,5 +1,8 @@
 <template>
   <v-app>
+    <v-app-bar dense color="green" app>
+      <v-toolbar-title>PiSign</v-toolbar-title>
+    </v-app-bar>
     <v-content>
       <Grid :layout="layout"></Grid>
     </v-content>
