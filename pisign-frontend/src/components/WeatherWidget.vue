@@ -36,7 +36,7 @@ export default {
     // Create a websocket
     var ws = new WebSocket("ws://localhost:9000/ws?api=weather");
     // Need to grab the Vue instance
-    var that = this;
+    var vue_data = this.$data;
 
     // Upon the socket being connected, we create a message receiver from the socket
     ws.onopen = function() {
@@ -44,8 +44,8 @@ export default {
         var data = JSON.parse(evt.data);
 
         // Here is where we update the data
-        that.api = data.api;
-        that.id = data.id;
+        vue_data.api = data.api;
+        vue_data.id = data.id;
       }
       this.send("Creating widget " + this.widgetID);
     }
@@ -53,8 +53,8 @@ export default {
         ws = null;
     }
     ws.onerror = function() {
-        that.api = "N/A";
-        that.id = "N/A";
+        vue_data.api = "N/A";
+        vue_data.id = "N/A";
     }
   }
 }
