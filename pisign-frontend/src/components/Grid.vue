@@ -1,11 +1,11 @@
 <template>
-  <v-container>
+  <v-container class="ma-1">
     <GridLayout
         :layout.sync="layout"
         :col-num="12"
         :row-height="30"
-        :is-draggable="true"
-        :is-resizable="true"
+        :is-draggable="is_draggable"
+        :is-resizable="is_resizable"
         :is-mirrored="false"
         :vertical-compact="true"
         :margin="[10, 10]"
@@ -18,23 +18,25 @@
                      :h="item.h"
                      :i="item.i"
                      :key="item.i"
-                     style="background: lightblue;"
+                     class = "v-card v-sheet theme--light blue lighten-4"
                      >
-        <CloseButton :index="index" :layout="layout"></CloseButton>
+        <CloseButton v-if="is_draggable" :index="index" :layout="layout"></CloseButton>
 
-        <div v-if="item.type === 'time'">
-          <TimeWidget></TimeWidget>
-        </div>
-        <div v-if="item.type === 'weather'">
-          <WeatherWidget :widgetID="item.i"></WeatherWidget>
-        </div>
-        <div v-else-if="item.type === 'default'">
-          <v-row class="text-center">
-            <v-col cols="12">
-              {{ item.i }}
-            </v-col>
-          </v-row>
-        </div>
+        <v-card-text class="pa-0">
+          <div v-if="item.type === 'time'">
+            <TimeWidget></TimeWidget>
+          </div>
+          <div v-if="item.type === 'weather'">
+            <WeatherWidget :widgetID="item.i"></WeatherWidget>
+          </div>
+          <div v-else-if="item.type === 'default'">
+            <v-row class="text-center">
+              <v-col cols="12">
+                {{ item.i }}
+              </v-col>
+            </v-row>
+          </div>
+        </v-card-text>
       </GridItem>
     </GridLayout>
   </v-container>
@@ -47,7 +49,15 @@ import TimeWidget from './TimeWidget.vue';
 import WeatherWidget from './WeatherWidget.vue';
 export default {
   name: 'Grid',
-  props: [ 'layout' ],
+  props: {
+    layout : {
+      required: true
+    }, is_draggable:{
+      required: true
+    }, is_resizable: {
+      required: true
+    }
+  },
   components: {
       GridLayout: VueGridLayout.GridLayout,
       GridItem: VueGridLayout.GridItem,

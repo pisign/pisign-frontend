@@ -2,19 +2,15 @@
   <v-app>
     <v-app-bar dense color="green" app>
       <v-toolbar-title>PiSign</v-toolbar-title>
+      <v-spacer></v-spacer>
+      <v-btn icon @click="editMode">
+        <v-icon>mdi-settings</v-icon>
+      </v-btn>
     </v-app-bar>
     <v-content>
       <v-sheet>
-        <Grid :layout="layout"></Grid>
-        <v-btn
-          color="pink"
-          dark
-          fixed
-          bottom
-          right
-          fab
-          @click="addWidget"
-        >
+        <Grid :layout="layout" :is_draggable="edit" :is_resizable="edit"></Grid>
+        <v-btn v-if="edit" color="pink" dark fixed bottom right fab @click="addWidget">
           <v-icon>mdi-plus</v-icon>
         </v-btn>
       </v-sheet>
@@ -42,13 +38,17 @@ export default {
   },
   data: function() {
     return {
-      layout: testLayout
+      layout: testLayout,
+      edit: true
     }
   },
   methods: {
     addWidget : function() {
       const key = this.layout.length.toString();
       this.layout.push({"x":0,"y":0,"w":2,"h":4,"i":key, "type": "default"})
+    },
+    editMode : function() {
+      this.edit = !this.edit
     }
   }
 }
