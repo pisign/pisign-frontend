@@ -1,11 +1,14 @@
 <template>
-  <div id="app">
-    <Grid :layout="layout"></Grid>
-  </div>
+  <v-app>
+    <v-content>
+      <Grid :layout="layout"></Grid>
+    </v-content>
+  </v-app>
 </template>
 
 <script>
 import Grid from './components/Grid.vue'
+
 
 var testLayout = [
   {"x":0,"y":0,"w":2,"h":5,"i":"0", "type": "time"},
@@ -27,14 +30,3 @@ export default {
   }
 }
 </script>
-
-<style>
-#app {
-  font-family: 'Avenir', Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
-}
-</style>
