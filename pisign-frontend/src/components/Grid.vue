@@ -30,6 +30,9 @@
         <div v-if="item.type === 'time'">
           <TimeWidget></TimeWidget>
         </div>
+        <div v-if="item.type === 'weather'">
+          <WeatherWidget :widgetID="item.i"></WeatherWidget>
+        </div>
         <div v-else-if="item.type === 'default'">
           <v-row class="text-center">
             <v-col cols="12">
@@ -46,6 +49,7 @@
 import VueGridLayout from 'vue-grid-layout';
 import CloseButton from './CloseButton.vue';
 import TimeWidget from './TimeWidget.vue';
+import WeatherWidget from './WeatherWidget.vue';
 export default {
   name: 'Grid',
   props: [ 'layout' ],
@@ -53,7 +57,8 @@ export default {
       GridLayout: VueGridLayout.GridLayout,
       GridItem: VueGridLayout.GridItem,
       CloseButton: CloseButton,
-      TimeWidget: TimeWidget
+      TimeWidget: TimeWidget,
+      WeatherWidget: WeatherWidget
   }
 }
 </script>
