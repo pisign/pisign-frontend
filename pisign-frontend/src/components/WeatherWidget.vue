@@ -8,7 +8,7 @@
     <br>
     <v-row class="text-center">
       <v-col cols="12" class="pa-0">
-        <p class="mb-0" blue>{{ temp_max }} {{ temp_min }}</p>
+        <p class="mb-0">{{ temp_max }} {{ temp_min }}</p>
       </v-col>
     </v-row>
   </v-container>
@@ -53,7 +53,6 @@ export default {
         vue_data.temp_min = data_parse.Main.temp_min + "°F";
         vue_data.temp_max = data_parse.Main.temp_max + "°F";
       }
-
     }
     ws.onclose = function() {
         ws = null;
