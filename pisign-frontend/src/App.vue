@@ -50,12 +50,6 @@ export default {
     editMode : function() {
       this.edit = !this.edit
     }
-  },
-  methods: {
-    addWidget : function() {
-      const key = this.layout.length.toString();
-      this.layout.push({"x":0,"y":0,"w":2,"h":4,"i":key, "type": "default"})
-    }
   }
 }
 </script>

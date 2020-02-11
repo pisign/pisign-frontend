@@ -2,12 +2,13 @@
   <v-container>
     <v-row class="text-center">
       <v-col cols="12" class="pa-0">
-        <p class="mb-0">{{ api }}</p>
+        <p class="mb-0">{{ temp }}</p>
       </v-col>
     </v-row>
+    <br>
     <v-row class="text-center">
       <v-col cols="12" class="pa-0">
-        <p class="mb-0">{{ id }}</p>
+        <p class="mb-0">{{ temp_max }} {{ temp_min }}</p>
       </v-col>
     </v-row>
   </v-container>
@@ -28,8 +29,9 @@ export default {
   },
   data: function(){
     return {
-      api: "",
-      id: ""
+      temp: "",
+      temp_min: "",
+      temp_max: ""
     }
   },
   created() {
@@ -40,21 +42,25 @@ export default {
 
     // Upon the socket being connected, we create a message receiver from the socket
     ws.onopen = function() {
+      // TODO need to find a way to set apiKey without leaking to GitHub
+      this.send('{"apiKey":"", "zip":46556}');
       this.onmessage = function(evt) {
         var data = JSON.parse(evt.data);
+        var data_parse = JSON.parse(data);
 
         // Here is where we update the data
-        vue_data.api = data.api;
-        vue_data.id = data.id;
+        vue_data.temp = data_parse.Main.Temp + "°F";
+        vue_data.temp_min = data_parse.Main.temp_min + "°F";
+        vue_data.temp_max = data_parse.Main.temp_max + "°F";
       }
-      this.send("Creating widget " + this.widgetID);
     }
     ws.onclose = function() {
         ws = null;
     }
     ws.onerror = function() {
-        vue_data.api = "N/A";
-        vue_data.id = "N/A";
+        vue_data.temp = "N/A";
+        vue_data.temp_min = "N/A";
+        vue_data.temp_max = "";
     }
   }
 }

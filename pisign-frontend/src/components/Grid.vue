@@ -1,5 +1,5 @@
 <template>
-  <v-container class="ma-1">
+  <v-container class="ma-1" fluid>
     <GridLayout
         :layout.sync="layout"
         :col-num="12"
