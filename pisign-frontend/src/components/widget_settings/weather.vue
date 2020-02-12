@@ -3,7 +3,7 @@
     <v-row>
       <v-form>
         <v-text-field v-model="apiKey" label="API Key*" required></v-text-field>
-        <v-text-field v-model="zipCode" label="ZIP Code"></v-text-field>
+        <v-text-field v-model="zip" label="ZIP Code" required></v-text-field>
       </v-form>
     </v-row>
   </v-container>
@@ -14,11 +14,17 @@ export default {
   name: 'WeatherSettings',
   data : function() {
     return {
-      apiKey: "",
-      zipCode: ""
+      apiKey: this.config.api.apiKey,
+      zip: this.config.api.zip
     }
-  }, methods:{
+  },
+  props : {
+    config : {
+      required: true
+    }
+  },methods:{
     sendInfo(){
+      this.zip = parseInt(this.zip);
       this.$emit('FormFilling', JSON.parse(JSON.stringify(this.$data)))
     }
   }

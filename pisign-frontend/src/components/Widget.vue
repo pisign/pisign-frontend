@@ -13,7 +13,7 @@
         <component :sentData="sendData" :is="type+'_widget'"></component>
       </div>
     </v-card-text>
-    <WidgetSettings v-if="edit" @saveForm="saveConfig" :type="type"></WidgetSettings>
+    <WidgetSettings v-if="edit" @saveForm="saveConfig" :type="type" :config="config"></WidgetSettings>
   </v-container>
 </template>
 
@@ -46,42 +46,46 @@ export default {
       sendData: null
     }
   },
-  methods:{
-    saveConfig : function(data) {
-      // Send data to this.ws (the websocket)
-      this.layout[this.index].type = data.type;
-      this.layout[this.index].config = data.config;
+  created() {
+    this.createSocket();
+  },
+  watch : {
+    type: function() {
+      this.ws.close();
+      this.createSocket();
     }
   },
-  created() {
-    // Create a websocket
-    this.ws = new WebSocket("ws://localhost:9000/ws?api=" + this.type);
+  methods:{
+    saveConfig : function(data) {
+      this.$emit('changeConfig',{'type': data.type, 'api': data.config, 'index': this.index});
+    },
+    createSocket : function(){
+      // Create a websocket
+      this.ws = new WebSocket("ws://localhost:9000/ws?api=" + this.type);
+      // Need to grab the Vue instance
+      var vue_data = this.$data;
+      var configParsed = JSON.parse(JSON.stringify(this.config));
 
-    // Need to grab the Vue instance
-    var vue_data = this.$data;
-    var configParsed = JSON.parse(JSON.stringify(this.config));
+      // Only start a socket, if we need to
+      if (Object.entries(configParsed).length > 0){
+        // Upon the socket being connected, we create a message receiver from the socket
+        this.ws.onopen = function() {
+          this.send(JSON.stringify(configParsed));
 
-    // Only start a socket, if we need to
-    if (Object.entries(configParsed).length > 0){
-      // Upon the socket being connected, we create a message receiver from the socket
-      this.ws.onopen = function() {
-        this.send(JSON.stringify(configParsed));
-
-        this.onmessage = function(evt) {
-          var data = JSON.parse(evt.data);
-          data.status = "success";
-          vue_data.sendData = data;
+          this.onmessage = function(evt) {
+            var data = JSON.parse(evt.data);
+            data.status = "success";
+            vue_data.sendData = data;
+          }
+        }
+        this.ws.onclose = function() {
+          this.ws = null;
+        }
+        this.ws.onerror = function() {
+          vue_data.sendData = {"status":"failure", "msg": "Couldn't connect"}
         }
       }
-      this.ws.onclose = function() {
-          this.ws = null;
-      }
-      this.ws.onerror = function() {
-        vue_data.sendData = {"status":"failure", "msg": "Couldn't connect"}
-      }
     }
-
-
   }
 }
 </script>

@@ -20,7 +20,7 @@
                      :key="item.i"
                      class = "v-card v-sheet theme--light blue lighten-4"
                      >
-        <Widget :type="item.type" :layout="layout" :index="index" :edit="edit" :config="item.config"></Widget>
+        <Widget @changeConfig="changeConfig" :type="item.type" :layout="layout" :index="index" :edit="edit" :config="item.config"></Widget>
       </GridItem>
     </GridLayout>
   </v-container>
@@ -42,6 +42,10 @@ export default {
       GridLayout: VueGridLayout.GridLayout,
       GridItem: VueGridLayout.GridItem,
       Widget: Widget
+  }, methods : {
+    changeConfig : function(data) {
+      this.$emit('changeConfig', data);
+    }
   }
 }
 </script>

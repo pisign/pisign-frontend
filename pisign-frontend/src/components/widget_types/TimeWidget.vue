@@ -22,7 +22,7 @@ export default {
     }
   }, props:{
     sentData:{
-      required: false
+      required: true
     }
   },
   watch : {
