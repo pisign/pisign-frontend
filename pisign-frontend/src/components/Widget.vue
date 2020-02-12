@@ -18,8 +18,8 @@
 </template>
 
 <script>
-import TimeWidget from './widget_types/TimeWidget.vue';
-import WeatherWidget from './widget_types/WeatherWidget.vue';
+import TimeWidget from './widget_types/time.vue';
+import WeatherWidget from './widget_types/weather.vue';
 import WidgetSettings from './WidgetSettings.vue';
 import CloseButton from './CloseButton.vue';
 export default {
