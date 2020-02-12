@@ -1,4 +1,5 @@
 # pisign-frontend
+[![Build Status](https://travis-ci.org/pisign/pisign-frontend.svg?branch=master)](https://travis-ci.org/pisign/pisign-frontend)
 
 ## Project setup
 ```
