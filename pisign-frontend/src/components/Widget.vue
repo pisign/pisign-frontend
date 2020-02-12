@@ -43,7 +43,8 @@ export default {
     }
   }, data : function() {
     return {
-      sendData: null
+      sendData: null,
+      api: JSON.stringify(this.config.api)
     }
   },
   created() {
@@ -53,10 +54,14 @@ export default {
     type: function() {
       this.ws.close();
       this.createSocket();
+    }, api: function() {
+      this.ws.close();
+      this.createSocket();
     }
   },
   methods:{
     saveConfig : function(data) {
+      this.api = data.config.api
       this.$emit('changeConfig',{'type': data.type, 'api': data.config, 'index': this.index});
     },
     createSocket : function(){
