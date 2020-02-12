@@ -18,7 +18,7 @@
             label="Widget Type"
             required
           ></v-select>
-          <component @FormFilling="changeData" v-bind:is="formType+'_settings'" :config="config"></component>
+          <component @FormFilling="changeData" v-bind:is="comp" :config="config"></component>
         </v-card-text>
         <v-card-actions>
           <v-spacer></v-spacer>
@@ -31,9 +31,6 @@
 </template>
 
 <script>
-import WeatherSettings from './widget_settings/weather.vue';
-import TimeSettings from './widget_settings/time.vue';
-import DefaultSettings from './widget_settings/default.vue'
 export default {
   name: 'WidgetSettings',
   props: {
@@ -50,6 +47,10 @@ export default {
       formData : {},
       formType : this.type
     }
+  }, computed: {
+    comp () {
+      return () => import(`./widget_settings/${this.formType}.vue`)
+    }
   },
   methods: {
     saveForm: function() {
@@ -60,11 +61,6 @@ export default {
     changeData: function(data) {
       this.formData.config = data;
     }
-  },
-  components: {
-      weather_settings: WeatherSettings,
-      clock_settings: TimeSettings,
-      default_settings: DefaultSettings
   }
 }
 </script>
