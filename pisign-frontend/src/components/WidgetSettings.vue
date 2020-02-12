@@ -1,5 +1,5 @@
 <template>
-  <v-footer v-if="settings" absolute color="transparent" class="pa-0" style="z-index:0">
+  <v-footer absolute color="transparent" class="pa-0" style="z-index:0">
     <v-dialog v-model="dialog" persistent max-width="600px">
       <template v-slot:activator="{ on }">
         <v-btn icon color="primary" dark v-on="on">
@@ -33,6 +33,7 @@
 <script>
 import WeatherSettings from './widget_settings/weather.vue';
 import TimeSettings from './widget_settings/time.vue';
+import DefaultSettings from './widget_settings/default.vue'
 export default {
   name: 'WidgetSettings',
   props: {
@@ -45,18 +46,9 @@ export default {
   data : function() {
     return {
       dialog: false,
-      settings: false,
       widgets: ['weather', 'clock'],
       formData : {},
       formType : this.type
-    }
-  },
-  created() {
-    for (var i=0; i<this.widgets.length; i++){
-      if (this.type==this.widgets[i]){
-        this.settings = true;
-        break;
-      }
     }
   },
   methods: {
@@ -71,7 +63,8 @@ export default {
   },
   components: {
       weather_settings: WeatherSettings,
-      clock_settings: TimeSettings
+      clock_settings: TimeSettings,
+      default_settings: DefaultSettings
   }
 }
 </script>
