@@ -25,6 +25,7 @@
                 :index="index"
                 :edit="edit"
                 :item="item"
+                :key="index+item.api.Name"
         ></Widget>
       </GridItem>
     </GridLayout>

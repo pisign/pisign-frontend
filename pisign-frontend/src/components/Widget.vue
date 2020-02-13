@@ -2,24 +2,20 @@
   <v-container class="pa-0">
     <CloseButton v-if="edit" :index="index" :layout="layout"></CloseButton>
     <v-card-text class="pa-0">
-      <component :sentData="sendData" :is="type+'_widget'"></component>
+      <component :sentData="sendData" :is="loadComponent"></component>
     </v-card-text>
     <WidgetSettings v-if="edit" @saveForm="saveConfig" :type="type" :api="api"></WidgetSettings>
   </v-container>
 </template>
 
 <script>
-import WeatherWidget from './widget_types/weather.vue';
-import ClockWidget from './widget_types/clock.vue';
 import WidgetSettings from './WidgetSettings.vue';
 import CloseButton from './CloseButton.vue';
 export default {
   name: 'Widget',
   components: {
     WidgetSettings: WidgetSettings,
-    CloseButton: CloseButton,
-    weather_widget: WeatherWidget,
-    clock_widget: ClockWidget
+    CloseButton: CloseButton
   }, props: {
     index: {
       required: true
@@ -35,6 +31,10 @@ export default {
       sendData: null,
       type: this.item.api.Name,
       api: this.item.api
+    }
+  }, computed:{
+    loadComponent(){
+      return () => import(`./widget_types/${this.type}.vue`)
     }
   },
   created() {
