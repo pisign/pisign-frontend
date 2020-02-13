@@ -53,8 +53,7 @@ export default {
                         {"apiLabel":"apiKey","label":"API Key*", "dataType": "string", "data": this.api.apiKey ? this.api.apiKey : ""}
                         ],
               'clock':[{"apiLabel": "Location","label":"Location*", "dataType": "string", "data": this.api.Location ? this.api.Location : "Local"}
-              ],
-              'default':[]},
+              ]},
       formType : this.type
     }
   }, computed : {
