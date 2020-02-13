@@ -34,7 +34,7 @@ export default {
         {"x":0,"y":0,"w":2,"h":5,"i":"0", "api":{"Name": "clock", "Location":"Local"}},
         {"x":2,"y":0,"w":2,"h":4,"i":"1", "api":{"Name": "weather","apiKey":"123", "zip":46530}},
         {"x":4,"y":0,"w":2,"h":5,"i":"2", "api":{"Name": "weather","apiKey":"123", "zip":46530}},
-        {"x":6,"y":0,"w":2,"h":5,"i":"3", "api": {"Name": "clock"}}
+        {"x":6,"y":0,"w":2,"h":5,"i":"3", "api": {"Name": "clock","Location":"Local"}}
         ],
       edit: true
     }
@@ -42,7 +42,7 @@ export default {
   methods: {
     addWidget : function() {
       const key = this.layout.length.toString();
-      this.layout.push({"x":0,"y":0,"w":2,"h":5,"i":key, "api":{"Name": "clock"}})
+      this.layout.push({"x":0,"y":0,"w":2,"h":5,"i":key, "api":{"Name": "clock", "Location":"Local"}})
     },
     editMode : function() {
       this.edit = !this.edit
