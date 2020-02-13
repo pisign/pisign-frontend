@@ -42,7 +42,7 @@ export default {
   methods: {
     addWidget : function() {
       const key = this.layout.length.toString();
-      this.layout.push({"x":0,"y":0,"w":2,"h":5,"i":key, "api":{"Name": "default"}})
+      this.layout.push({"x":0,"y":0,"w":2,"h":5,"i":key, "api":{"Name": "clock"}})
     },
     editMode : function() {
       this.edit = !this.edit
