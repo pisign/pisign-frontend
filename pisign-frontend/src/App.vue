@@ -31,11 +31,11 @@ export default {
   data: function() {
     return {
       layout: [
-        {"x":0,"y":0,"w":2,"h":5,"i":"0", "type": "clock", "config":{"api":{"Location":"Local"}}},
-        {"x":2,"y":0,"w":2,"h":4,"i":"1", "type": "weather", "config":{"api":{"apiKey":"123", "zip":46530}}},
-        {"x":4,"y":0,"w":2,"h":5,"i":"2", "type": "weather", "config":{"api":{"apiKey":"123", "zip":46530}}},
-        {"x":6,"y":0,"w":2,"h":3,"i":"3", "type": "default", "config":{}},
-        {"x":8,"y":0,"w":2,"h":3,"i":"4", "type": "default", "config":{}}
+        {"x":0,"y":0,"w":2,"h":5,"i":"0", "api":{"Name": "clock", "Location":"Local"}},
+        {"x":2,"y":0,"w":2,"h":4,"i":"1", "api":{"Name": "weather","apiKey":"123", "zip":46530}},
+        {"x":4,"y":0,"w":2,"h":5,"i":"2", "api":{"Name": "weather","apiKey":"123", "zip":46530}},
+        {"x":6,"y":0,"w":2,"h":3,"i":"3", "api": {"Name": "default"}},
+        {"x":8,"y":0,"w":2,"h":3,"i":"4", "api": {"Name": "default"}}
         ],
       edit: true
     }
@@ -43,14 +43,14 @@ export default {
   methods: {
     addWidget : function() {
       const key = this.layout.length.toString();
-      this.layout.push({"x":0,"y":0,"w":2,"h":5,"i":key, "type": "default", "config":{}})
+      this.layout.push({"x":0,"y":0,"w":2,"h":5,"i":key, "api":{"Name": "default"}})
     },
     editMode : function() {
       this.edit = !this.edit
     },
     changeConfig : function(data) {
-      this.layout[data.index].type = data.type;
-      this.layout[data.index].config.api = JSON.parse(JSON.stringify(data.api.config));
+      this.layout[data.index].api.Name = data.type;
+      this.layout[data.index].api = JSON.parse(JSON.stringify(data.api));
     }
   }
 }

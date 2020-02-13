@@ -11,14 +11,18 @@
           <span class="headline">Widget Settings</span>
         </v-card-title>
         <v-card-text>
-          <v-select
-            v-model="formType"
-            :items="widgets"
-            :rules="[v => !!v || 'Item is required']"
-            label="Widget Type"
-            required
-          ></v-select>
-          <component @FormFilling="changeData" v-bind:is="comp" :config="config"></component>
+          <v-row>
+            <v-form>
+              <v-select
+                v-model="formType"
+                :items="widgets"
+                :rules="[v => !!v || 'Item is required']"
+                label="Widget Type"
+                required
+              ></v-select>
+              <v-text-field v-for="info in compForm" v-bind:label="info.label" v-model="info.data" :key="info.label"></v-text-field>
+            </v-form>
+          </v-row>
         </v-card-text>
         <v-card-actions>
           <v-spacer></v-spacer>
@@ -36,30 +40,49 @@ export default {
   props: {
     type: {
       required: true
-    }, config :{
+    }, api :{
       required: true
     }
   },
   data : function() {
+    // In the future, the form data will be retrieved from the server
     return {
       dialog: false,
       widgets: ['weather', 'clock'],
-      formData : {},
+      form: {'weather':[{"apiLabel":"zip",   "label":"Zip*", "dataType" :"integer",    "data": this.api.zip ? this.api.zip : ""},
+                        {"apiLabel":"apiKey","label":"API Key*", "dataType": "string", "data": this.api.apiKey ? this.api.apiKey : ""}
+                        ],
+              'clock':[{"apiLabel": "Location","label":"Location*", "dataType": "string", "data": this.api.Location ? this.api.Location : "Local"}
+              ],
+              'default':[]},
       formType : this.type
     }
-  }, computed: {
-    comp () {
-      return () => import(`./widget_settings/${this.formType}.vue`)
+  }, computed : {
+    compForm : function() {
+      return this.form[this.formType];
     }
   },
   methods: {
     saveForm: function() {
       this.dialog = false;
-      var return_data = {"type": this.formType, "config": JSON.parse(JSON.stringify(this.formData))}
-      this.$emit('saveForm', return_data);
-    },
-    changeData: function(data) {
-      this.formData.config = data;
+      var formData = {"api":{"Name": this.formType}};
+      for (var i=0; i<this.form[this.formType].length; i++){
+        var dataManipulation;
+        switch (this.form[this.formType][i].dataType){
+          case "integer":
+            dataManipulation = parseInt;
+            break;
+          case "string":
+            dataManipulation = function(data){return data;}
+            break;
+          default:
+            dataManipulation = function(data){return data;}
+            break;
+        }
+        formData.api[this.form[this.formType][i].apiLabel] = dataManipulation(this.form[this.formType][i].data);
+
+      }
+      this.$emit('saveForm', formData);
     }
   }
 }
