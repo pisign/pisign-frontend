@@ -2,49 +2,40 @@
   <v-container class="pa-0">
     <CloseButton v-if="edit" :index="index" :layout="layout"></CloseButton>
     <v-card-text class="pa-0">
-      <div v-if="type=='default'">
-        <v-row class="text-center">
-          <v-col cols="12">
-            {{ type }}
-          </v-col>
-        </v-row>
-      </div>
-      <div v-else>
-        <component :sentData="sendData" :is="type+'_widget'"></component>
-      </div>
+      <component :sentData="sendData" :is="loadComponent"></component>
     </v-card-text>
-    <WidgetSettings v-if="edit" @saveForm="saveConfig" :type="type" :config="config"></WidgetSettings>
+    <WidgetSettings v-if="edit" @saveForm="saveConfig" :type="type" :api="api"></WidgetSettings>
   </v-container>
 </template>
 
 <script>
-import TimeWidget from './widget_types/TimeWidget.vue';
-import WeatherWidget from './widget_types/WeatherWidget.vue';
 import WidgetSettings from './WidgetSettings.vue';
 import CloseButton from './CloseButton.vue';
+import { serverIP } from '../plugins/server_settings.js'
 export default {
   name: 'Widget',
   components: {
-    weather_widget: WeatherWidget,
-    clock_widget: TimeWidget,
     WidgetSettings: WidgetSettings,
     CloseButton: CloseButton
   }, props: {
-    type: {
-      required: true
-    }, index: {
+    index: {
       required: true
     }, layout: {
       required: true
     }, edit: {
       required: true
-    }, config: {
+    }, item: {
       required: true
     }
   }, data : function() {
     return {
       sendData: null,
-      api: JSON.stringify(this.config.api)
+      type: this.item.api.Name,
+      api: this.item.api
+    }
+  }, computed:{
+    loadComponent(){
+      return () => import(`./widget_types/${this.type}.vue`)
     }
   },
   created() {
@@ -61,34 +52,35 @@ export default {
   },
   methods:{
     saveConfig : function(data) {
-      this.api = data.config.api
-      this.$emit('changeConfig',{'type': data.type, 'api': data.config, 'index': this.index});
+      this.api = data.api;
+      this.$emit('changeConfig',{'api': data.api, 'index': this.index});
     },
     createSocket : function(){
       // Create a websocket
-      this.ws = new WebSocket("ws://localhost:9000/ws?api=" + this.type);
+      this.ws = new WebSocket("ws://" + serverIP + "/ws?api=" + this.type);
       // Need to grab the Vue instance
       var vue_data = this.$data;
-      var configParsed = JSON.parse(JSON.stringify(this.config));
+      var apiParsed = {"x": this.item.x, "y": this.item.y, "h": this.item.h, "w": this.item.w, "i": this.item.i, "api": JSON.parse(JSON.stringify(this.api))};
 
-      // Only start a socket, if we need to
-      if (Object.entries(configParsed).length > 0){
-        // Upon the socket being connected, we create a message receiver from the socket
-        this.ws.onopen = function() {
-          this.send(JSON.stringify(configParsed));
+      // Upon the socket being connected, we create a message receiver from the socket
+      this.ws.onopen = function() {
+        this.send(JSON.stringify(apiParsed));
 
-          this.onmessage = function(evt) {
+        this.onmessage = function(evt) {
+          try {
             var data = JSON.parse(evt.data);
             data.status = "success";
             vue_data.sendData = data;
+          } catch {
+            vue_data.sendData = {"status": "failure", "msg": evt.data}
           }
         }
-        this.ws.onclose = function() {
-          this.ws = null;
-        }
-        this.ws.onerror = function() {
-          vue_data.sendData = {"status":"failure", "msg": "Couldn't connect"}
-        }
+      }
+      this.ws.onclose = function() {
+        this.ws = null;
+      }
+      this.ws.onerror = function() {
+        vue_data.sendData = {"status":"failure", "msg": "Couldn't connect"}
       }
     }
   }

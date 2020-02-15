@@ -20,7 +20,13 @@
                      :key="item.i"
                      class = "v-card v-sheet theme--light blue lighten-4"
                      >
-        <Widget @changeConfig="changeConfig" :type="item.type" :layout="layout" :index="index" :edit="edit" :config="item.config"></Widget>
+        <Widget @changeConfig="changeConfig"
+                :layout="layout"
+                :index="index"
+                :edit="edit"
+                :item="item"
+                :key="index+item.api.Name"
+        ></Widget>
       </GridItem>
     </GridLayout>
   </v-container>
