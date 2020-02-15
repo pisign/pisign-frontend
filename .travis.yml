@@ -4,7 +4,5 @@ node_js:
 cache:
   directories:
     node_modules
-before_install:
-  - cd pisign-frontend
 script:
   - npm run test:unit
