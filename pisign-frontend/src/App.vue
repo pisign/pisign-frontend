@@ -21,8 +21,8 @@
 
 <script>
 import Grid from './components/Grid.vue'
-
-
+import { serverIP } from './plugins/server_settings.js'
+import axios from 'axios';
 export default {
   name: 'app',
   components: {
@@ -38,6 +38,8 @@ export default {
         ],
       edit: true
     }
+  }, created() {
+    axios.get("http://" + serverIP + "/layouts?name=main").then(response => console.log(response.data));
   },
   methods: {
     addWidget : function() {

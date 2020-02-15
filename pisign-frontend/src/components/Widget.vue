@@ -11,6 +11,7 @@
 <script>
 import WidgetSettings from './WidgetSettings.vue';
 import CloseButton from './CloseButton.vue';
+import { serverIP } from '../plugins/server_settings.js'
 export default {
   name: 'Widget',
   components: {
@@ -56,7 +57,7 @@ export default {
     },
     createSocket : function(){
       // Create a websocket
-      this.ws = new WebSocket("ws://localhost:9000/ws?api=" + this.type);
+      this.ws = new WebSocket("ws://" + serverIP + "/ws?api=" + this.type);
       // Need to grab the Vue instance
       var vue_data = this.$data;
       var apiParsed = {"x": this.item.x, "y": this.item.y, "h": this.item.h, "w": this.item.w, "i": this.item.i, "api": JSON.parse(JSON.stringify(this.api))};
