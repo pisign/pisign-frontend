@@ -30,8 +30,8 @@ export default {
   }, data : function() {
     return {
       sendData: null,
-      type: this.item.api.Name,
-      api: this.item.api
+      type: this.item.Name,
+      api: this.item.Config
     }
   }, computed:{
     loadComponent(){
@@ -52,8 +52,9 @@ export default {
   },
   methods:{
     saveConfig : function(data) {
-      this.api = data.api;
-      this.$emit('changeConfig',{'api': data.api, 'index': this.index});
+      this.api = data.Config;
+      this.type = data.Name;
+      this.$emit('changeConfig',{'Name': data.Name, 'Config': data.Config, 'index': this.index});
     },
     createSocket : function(){
       // Create a websocket

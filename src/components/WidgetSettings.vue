@@ -64,7 +64,7 @@ export default {
   methods: {
     saveForm: function() {
       this.dialog = false;
-      var formData = {"api":{"Name": this.formType}};
+      var formData = {"Name": this.formType, "Config":{}};
       for (var i=0; i<this.form[this.formType].length; i++){
         var dataManipulation;
         switch (this.form[this.formType][i].dataType){
@@ -78,7 +78,7 @@ export default {
             dataManipulation = function(data){return data;}
             break;
         }
-        formData.api[this.form[this.formType][i].apiLabel] = dataManipulation(this.form[this.formType][i].data);
+        formData.Config[this.form[this.formType][i].apiLabel] = dataManipulation(this.form[this.formType][i].data);
 
       }
       this.$emit('saveForm', formData);
