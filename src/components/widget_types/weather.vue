@@ -38,7 +38,6 @@ export default {
   }, watch: {
     sentData: function(){
       if (this.sentData.Status=="failure"){
-        console.log(this.sentData.ErrorMessage);
         this.temp = "N/A";
         this.temp_min = "N/A";
         this.temp_max = "";

@@ -36,9 +36,8 @@ export default {
         this.time = date_obj.toLocaleTimeString('en-US');
         this.date = date_obj.toLocaleDateString('en-US');
       } else if (this.sentData.Status == "failure") {
-        console.log(this.sentData.ErrorMessage);
         this.time = "N/A";
-        this.time = "N/A"
+        this.date = "N/A";
       }
 
     }
