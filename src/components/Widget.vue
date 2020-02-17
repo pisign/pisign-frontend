@@ -1,6 +1,6 @@
 <template>
   <v-container class="pa-0">
-    <CloseButton v-if="edit" :index="index" :layout="layout"></CloseButton>
+    <CloseButton v-if="edit" :index="index" :layout="layout" :websocket="ws"></CloseButton>
     <v-card-text class="pa-0">
       <component :sentData="sendData" :is="loadComponent"></component>
     </v-card-text>
@@ -11,7 +11,7 @@
 <script>
 import WidgetSettings from './WidgetSettings.vue';
 import CloseButton from './CloseButton.vue';
-import { serverIP } from '../plugins/server_settings.js'
+import { serverIP } from './constants/server_settings.js'
 export default {
   name: 'Widget',
   components: {
@@ -30,8 +30,9 @@ export default {
   }, data : function() {
     return {
       sendData: null,
-      type: this.item.api.Name,
-      api: this.item.api
+      type: this.item.Name,
+      api: this.item.Config,
+      ws : null
     }
   }, computed:{
     loadComponent(){
@@ -52,15 +53,16 @@ export default {
   },
   methods:{
     saveConfig : function(data) {
-      this.api = data.api;
-      this.$emit('changeConfig',{'api': data.api, 'index': this.index});
+      this.api = data.Config;
+      this.type = data.Name;
+      this.$emit('changeConfig',{'Name': data.Name, 'Config': data.Config, 'index': this.index});
     },
     createSocket : function(){
       // Create a websocket
       this.ws = new WebSocket("ws://" + serverIP + "/ws?api=" + this.type);
       // Need to grab the Vue instance
       var vue_data = this.$data;
-      var apiParsed = {"x": this.item.x, "y": this.item.y, "h": this.item.h, "w": this.item.w, "i": this.item.i, "api": JSON.parse(JSON.stringify(this.api))};
+      var apiParsed = {"action": "CONFIGURE", "position":{"x": this.item.x, "y": this.item.y, "h": this.item.h, "w": this.item.w, "i": this.item.i}, "config": JSON.parse(JSON.stringify(this.api))};
 
       // Upon the socket being connected, we create a message receiver from the socket
       this.ws.onopen = function() {
@@ -69,10 +71,9 @@ export default {
         this.onmessage = function(evt) {
           try {
             var data = JSON.parse(evt.data);
-            data.status = "success";
             vue_data.sendData = data;
           } catch {
-            vue_data.sendData = {"status": "failure", "msg": evt.data}
+            vue_data.sendData = {"Status": "failure", "msg": evt.data}
           }
         }
       }
@@ -80,7 +81,7 @@ export default {
         this.ws = null;
       }
       this.ws.onerror = function() {
-        vue_data.sendData = {"status":"failure", "msg": "Couldn't connect"}
+        vue_data.sendData = {"Status":"failure", "msg": "Couldn't connect"}
       }
     }
   }

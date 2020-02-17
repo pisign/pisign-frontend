@@ -35,6 +35,7 @@
 </template>
 
 <script>
+import { WidgetSettingsForm } from './constants/widget_settings.js'
 export default {
   name: 'WidgetSettings',
   props: {
@@ -49,12 +50,18 @@ export default {
     return {
       dialog: false,
       widgets: ['weather', 'clock'],
-      form: {'weather':[{"apiLabel":"zip",   "label":"Zip*", "dataType" :"integer",    "data": this.api.zip ? this.api.zip : ""},
-                        {"apiLabel":"apiKey","label":"API Key*", "dataType": "string", "data": this.api.apiKey ? this.api.apiKey : ""}
-                        ],
-              'clock':[{"apiLabel": "Location","label":"Location*", "dataType": "string", "data": this.api.Location ? this.api.Location : "Local"}
-              ]},
+      form: JSON.parse(JSON.stringify(WidgetSettingsForm)),
       formType : this.type
+    }
+  }, created () {
+    var keys = Object.keys(this.api);
+    for (var i in keys){
+      var key = keys[i];
+      for (var j in this.form[this.formType]){
+        if (this.form[this.formType][j].apiLabel == key){
+          this.form[this.formType][j].data = this.api[key];
+        }
+      }
     }
   }, computed : {
     compForm : function() {
@@ -64,7 +71,7 @@ export default {
   methods: {
     saveForm: function() {
       this.dialog = false;
-      var formData = {"api":{"Name": this.formType}};
+      var formData = {"Name": this.formType, "Config":{}};
       for (var i=0; i<this.form[this.formType].length; i++){
         var dataManipulation;
         switch (this.form[this.formType][i].dataType){
@@ -78,7 +85,7 @@ export default {
             dataManipulation = function(data){return data;}
             break;
         }
-        formData.api[this.form[this.formType][i].apiLabel] = dataManipulation(this.form[this.formType][i].data);
+        formData.Config[this.form[this.formType][i].apiLabel] = dataManipulation(this.form[this.formType][i].data);
 
       }
       this.$emit('saveForm', formData);

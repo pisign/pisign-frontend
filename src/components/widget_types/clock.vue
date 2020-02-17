@@ -4,6 +4,9 @@
       <v-col cols="12" class="pa-0">
         <p class="mb-0">{{ time }}</p>
       </v-col>
+      <v-col cols="12" class="pa-0">
+        <p class="mb-0">{{ date }}</p>
+      </v-col>
     </v-row>
   </v-container>
 </template>
@@ -18,7 +21,8 @@ export default {
   name: 'TimeWidget',
   data: function(){
     return {
-      time: ""
+      time: "",
+      date: ""
     }
   }, props:{
     sentData:{
@@ -27,10 +31,13 @@ export default {
   },
   watch : {
     sentData : function(){
-      if (this.sentData.status == "success"){
-        this.time = this.sentData.Time;
-      } else {
+      if (this.sentData.Status == "success"){
+        var date_obj = new Date(Date.parse(this.sentData.Time));
+        this.time = date_obj.toLocaleTimeString('en-US');
+        this.date = date_obj.toLocaleDateString('en-US');
+      } else if (this.sentData.Status == "failure") {
         this.time = "N/A";
+        this.date = "N/A";
       }
 
     }
