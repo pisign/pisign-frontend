@@ -37,14 +37,15 @@ export default {
     }
   }, watch: {
     sentData: function(){
-      if (this.sentData.status=="failure"){
+      if (this.sentData.Status=="failure"){
+        console.log(this.sentData.ErrorMessage);
         this.temp = "N/A";
         this.temp_min = "N/A";
         this.temp_max = "";
       } else {
-        this.temp = this.sentData.Main.Temp + "°F";
-        this.temp_min = this.sentData.Main.temp_min + "°F";
-        this.temp_max = this.sentData.Main.temp_max + "°F";
+        this.temp = Math.round(this.sentData.Main.Temp) + "°F";
+        this.temp_min = Math.round(this.sentData.Main.TempMin) + "°F";
+        this.temp_max = Math.round(this.sentData.Main.TempMax) + "°F";
       }
     }
   }

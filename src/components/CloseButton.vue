@@ -30,10 +30,17 @@ export default {
     },
     layout: {
       required: true
+    },
+    websocket: {
+      required: false
     }
   },
   methods: {
     close : function() {
+      if (this.websocket){
+        this.websocket.send({"Action": "DELETE"});
+        this.websocket.close();
+      }
       this.$delete(this.layout, this.index);
     }
   }

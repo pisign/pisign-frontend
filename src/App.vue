@@ -21,7 +21,7 @@
 
 <script>
 import Grid from './components/Grid.vue'
-import { serverIP } from './plugins/server_settings.js'
+import { serverIP } from './components/constants/server_settings.js'
 import axios from 'axios';
 export default {
   name: 'app',
