@@ -18,14 +18,17 @@
 </style>
 <script>
 export default {
-  name: 'TimeWidget',
+  name: 'ClockWidget',
   data: function(){
     return {
       time: "",
-      date: ""
+      date: "",
+      timeZone: this.api.Location
     }
   }, props:{
     sentData:{
+      required: true
+    }, api : {
       required: true
     }
   },
@@ -33,13 +36,14 @@ export default {
     sentData : function(){
       if (this.sentData.Status == "success"){
         var date_obj = new Date(Date.parse(this.sentData.Time));
-        this.time = date_obj.toLocaleTimeString('en-US');
-        this.date = date_obj.toLocaleDateString('en-US');
+        this.time = date_obj.toLocaleTimeString('en-US', {timeZone: this.timeZone});
+        this.date = date_obj.toLocaleDateString('en-US', {timeZone: this.timeZone});
       } else if (this.sentData.Status == "failure") {
         this.time = "N/A";
         this.date = "N/A";
       }
-
+    }, api : function() {
+      this.timeZone = this.api.Location;
     }
   }
 }

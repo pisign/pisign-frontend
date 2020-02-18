@@ -1,8 +1,8 @@
 export var WidgetSettingsForm  = {
   'weather':
     [
-      {"apiLabel":"zip",   "label":"Zip*", "dataType" :"integer",    "data": ""},
-      {"apiLabel":"apiKey","label":"API Key*", "dataType": "string", "data": ""}
+      {"apiLabel":"Zip",   "label":"Zip*", "dataType" :"integer",    "data": ""},
+      {"apiLabel":"APIKey","label":"API Key*", "dataType": "string", "data": ""}
     ],
   'clock':
     [

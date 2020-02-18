@@ -30,21 +30,34 @@ export default {
   },
   data: function() {
     return {
-      layout: [
-        {"x":0,"y":0,"w":2,"h":5,"i":"0", "Name": "clock", "Config": {"Location":"Local"}},
-        {"x":2,"y":0,"w":2,"h":4,"i":"1", "Name": "weather", "Config": {"apiKey":"123", "zip":46530}},
-        {"x":4,"y":0,"w":2,"h":5,"i":"2", "Name": "weather", "Config": {"apiKey":"123", "zip":46530}},
-        {"x":6,"y":0,"w":2,"h":5,"i":"3", "Name": "clock", "Config": {"Location":"Local"}}
-        ],
+      // layout: [
+      //   {"x":0,"y":0,"w":2,"h":5,"i":"0", "Name": "clock", "Config": {"Location":"America/New_York"}},
+      //   {"x":2,"y":0,"w":2,"h":4,"i":"1", "Name": "weather", "Config": {"apiKey":"123", "zip":46530}},
+      //   {"x":4,"y":0,"w":2,"h":5,"i":"2", "Name": "weather", "Config": {"apiKey":"123", "zip":46530}},
+      //   {"x":6,"y":0,"w":2,"h":5,"i":"3", "Name": "clock", "Config": {"Location":"America/New_York"}}
+      //   ],
+      layout : [],
       edit: true
     }
-  }, created() {
-    axios.get("http://" + serverIP + "/layouts?name=main").then(response => console.log(response.data));
+  }, beforeCreate() {
+    axios.get("http://" + serverIP + "/layouts?name=main").then(response => {
+      if (response.data.List){
+        this.layout = response.data.List;
+      } else {
+        this.layout = []
+      }
+    });
   },
   methods: {
+    uuidv4 : function() {
+      return ([1e7]+-1e3+-4e3+-8e3+-1e11).replace(/[018]/g, c =>
+        (c ^ crypto.getRandomValues(new Uint8Array(1))[0] & 15 >> c / 4).toString(16)
+      );
+    },
     addWidget : function() {
       const key = this.layout.length.toString();
-      this.layout.push({"x":0,"y":0,"w":2,"h":5,"i":key, "Name": "clock", "Config":{"Location":"Local"}})
+      const uuid = this.uuidv4();
+      this.layout.push({"x":0,"y":0,"w":2,"h":5,"i":key, "UUID": uuid, "Name": "clock", "Config":{"Location":"America/New_York"}})
     },
     editMode : function() {
       this.edit = !this.edit

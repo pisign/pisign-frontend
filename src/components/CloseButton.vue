@@ -38,7 +38,7 @@ export default {
   methods: {
     close : function() {
       if (this.websocket){
-        this.websocket.send({"Action": "DELETE"});
+        this.websocket.send(JSON.stringify({"Action": "Delete"}));
         this.websocket.close();
       }
       this.$delete(this.layout, this.index);
