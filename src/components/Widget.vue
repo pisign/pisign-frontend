@@ -2,9 +2,9 @@
   <v-container class="pa-0">
     <CloseButton v-if="edit" :index="index" :layout="layout" :websocket="ws"></CloseButton>
     <v-card-text class="pa-0">
-      <component :sentData="sendData" :is="loadComponent"></component>
+      <component :api="Config" :sentData="sendData" :is="Name+'Widget'"></component>
     </v-card-text>
-    <WidgetSettings v-if="edit" @saveForm="saveConfig" :type="type" :api="api"></WidgetSettings>
+    <WidgetSettings v-if="edit" @saveForm="saveConfig" :type="Name" :api="Config"></WidgetSettings>
   </v-container>
 </template>
 
@@ -12,11 +12,15 @@
 import WidgetSettings from './WidgetSettings.vue';
 import CloseButton from './CloseButton.vue';
 import { serverIP } from './constants/server_settings.js'
+import ClockWidget from './widget_types/clock.vue';
+import WeatherWidget from './widget_types/weather.vue';
 export default {
   name: 'Widget',
   components: {
     WidgetSettings: WidgetSettings,
-    CloseButton: CloseButton
+    CloseButton: CloseButton,
+    clockWidget: ClockWidget,
+    weatherWidget: WeatherWidget
   }, props: {
     index: {
       required: true
@@ -26,44 +30,47 @@ export default {
       required: true
     }, item: {
       required: true
+    }, positionUpdate : {
+      required: true
+    }, uuid : {
+      required: true
     }
   }, data : function() {
     return {
       sendData: null,
-      type: this.item.Name,
-      api: this.item.Config,
+      Name: this.item.Name,
+      Config: this.item.Config,
       ws : null
     }
-  }, computed:{
-    loadComponent(){
-      return () => import(`./widget_types/${this.type}.vue`)
-    }
-  },
+  }, 
   created() {
     this.createSocket();
   },
   watch : {
-    type: function() {
-      this.ws.close();
-      this.createSocket();
-    }, api: function() {
-      this.ws.close();
-      this.createSocket();
+    positionUpdate : function(){
+      if (this.positionUpdate == this.index){
+        this.ws.send(JSON.stringify({"action": "ConfigurePosition", "position":{"x": this.item.x, "y": this.item.y, "h": this.item.h, "w": this.item.w, "i": this.item.i}}));
+      }
     }
   },
   methods:{
     saveConfig : function(data) {
-      this.api = data.Config;
-      this.type = data.Name;
-      this.$emit('changeConfig',{'Name': data.Name, 'Config': data.Config, 'index': this.index});
+      if (this.Name != data.Name){
+        this.Name = data.Name;
+        this.ws.send(JSON.stringify({"Action": "ChangeAPI", "Name": this.Name}));
+      }
+      if (this.Config != data.Config){
+        this.Config = data.Config;
+        this.ws.send(JSON.stringify({"Action": "ConfigureAPI", "Config": this.Config}));
+      }
+      this.$emit('changeConfig',{'Name': this.Name, 'Config': this.Config, 'index': this.index});
     },
     createSocket : function(){
       // Create a websocket
-      this.ws = new WebSocket("ws://" + serverIP + "/ws?api=" + this.type);
+      this.ws = new WebSocket("ws://" + serverIP + "/ws?api=" + this.Name + "&uuid=" + this.uuid);
       // Need to grab the Vue instance
       var vue_data = this.$data;
-      var apiParsed = {"action": "CONFIGURE", "position":{"x": this.item.x, "y": this.item.y, "h": this.item.h, "w": this.item.w, "i": this.item.i}, "config": JSON.parse(JSON.stringify(this.api))};
-
+      var apiParsed = {"action": "Init", "position":{"x": this.item.x, "y": this.item.y, "h": this.item.h, "w": this.item.w, "i": this.item.i}, "config": JSON.parse(JSON.stringify(this.Config))};
       // Upon the socket being connected, we create a message receiver from the socket
       this.ws.onopen = function() {
         this.send(JSON.stringify(apiParsed));

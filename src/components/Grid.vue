@@ -17,7 +17,11 @@
                      :w="item.w"
                      :h="item.h"
                      :i="item.i"
-                     :key="item.i"
+                     :key="item.UUID"
+                     @move="sendNewPosition(-1)"
+                     @moved="sendNewPosition(index)"
+                     @resize="sendNewPosition(-1)"
+                     @resized="sendNewPosition(index)"
                      class = "v-card v-sheet theme--light blue lighten-4"
                      >
         <Widget @changeConfig="changeConfig"
@@ -25,7 +29,8 @@
                 :index="index"
                 :edit="edit"
                 :item="item"
-                :key="index+item.Name"
+                :uuid="item.UUID"
+                :positionUpdate="positionUpdate"
         ></Widget>
       </GridItem>
     </GridLayout>
@@ -43,6 +48,10 @@ export default {
     }, edit:{
       required: true
     }
+  }, data : function() {
+    return {
+      positionUpdate : 0
+    }
   },
   components: {
       GridLayout: VueGridLayout.GridLayout,
@@ -51,6 +60,9 @@ export default {
   }, methods : {
     changeConfig : function(data) {
       this.$emit('changeConfig', data);
+    },
+    sendNewPosition : function(data) {
+      this.positionUpdate = data;
     }
   }
 }
