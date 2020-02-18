@@ -33,16 +33,21 @@ export default {
     }
   },
   watch : {
+    // Run function on change of the sent data API
     sentData : function(){
+      // If the API was successful
       if (this.sentData.Status == "success"){
         var date_obj = new Date(Date.parse(this.sentData.Time));
         this.time = date_obj.toLocaleTimeString('en-US', {timeZone: this.timeZone});
         this.date = date_obj.toLocaleDateString('en-US', {timeZone: this.timeZone});
-      } else if (this.sentData.Status == "failure") {
+      }
+       // If the API sent failed in some way
+      else if (this.sentData.Status == "failure") {
         this.time = "N/A";
         this.date = "N/A";
       }
     }, api : function() {
+      // If they change the clock Location
       this.timeZone = this.api.Location;
     }
   }
