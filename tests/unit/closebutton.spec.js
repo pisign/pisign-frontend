@@ -10,7 +10,6 @@ import {
     mount,
     createLocalVue
 } from '@vue/test-utils'
-Vue.use(Vuetify)
 
 const localVue = createLocalVue();
 
