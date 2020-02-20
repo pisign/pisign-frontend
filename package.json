@@ -11,8 +11,10 @@
   "dependencies": {
     "axios": "^0.19.2",
     "core-js": "^3.4.4",
+    "moment-timezone": "^0.5.27",
     "vue": "^2.6.10",
-    "vue-grid-layout": "^2.3.7"
+    "vue-grid-layout": "^2.3.7",
+    "vue-moment": "^4.1.0"
   },
   "devDependencies": {
     "@nuxtjs/vuetify": "^1.10.3",
