@@ -36,11 +36,14 @@ export default {
     }
   },
   methods: {
+    // When we push the close button
     close : function() {
       if (this.websocket){
+        // We want to send to the client that we are deleting this widget from the pool
         this.websocket.send(JSON.stringify({"Action": "Delete"}));
         this.websocket.close();
       }
+      // Removes it from the local layout array which holds all the widget information
       this.$delete(this.layout, this.index);
     }
   }

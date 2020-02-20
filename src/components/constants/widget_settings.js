@@ -1,3 +1,4 @@
+// Utilized in `WidgetSettings.vue` for rendering the form
 export var WidgetSettingsForm  = {
   'weather':
     [

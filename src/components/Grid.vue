@@ -1,5 +1,6 @@
 <template>
   <v-container class="ma-1" fluid>
+    <!-- Renders the grid layout information -->
     <GridLayout
         :layout.sync="layout"
         :col-num="12"
@@ -24,6 +25,7 @@
                      @resized="sendNewPosition(index)"
                      class = "v-card v-sheet theme--light blue lighten-4"
                      >
+        <!-- Creates a new widget for each of the grid items and passes values -->
         <Widget @changeConfig="changeConfig"
                 :layout="layout"
                 :index="index"
@@ -58,9 +60,11 @@ export default {
       GridItem: VueGridLayout.GridItem,
       Widget: Widget
   }, methods : {
+    // Called when a widget changes the settings
     changeConfig : function(data) {
       this.$emit('changeConfig', data);
     },
+    // Called when a widget moves or is resized
     sendNewPosition : function(data) {
       this.positionUpdate = data;
     }

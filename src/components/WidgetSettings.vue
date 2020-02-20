@@ -1,5 +1,7 @@
 <template>
+  <!-- Adds a footer to the widget card -->
   <v-footer absolute color="transparent" class="pa-0" style="z-index:0">
+    <!-- Generates a dialog when needed -->
     <v-dialog v-model="dialog" persistent max-width="600px">
       <template v-slot:activator="{ on }">
         <v-btn icon color="primary" dark v-on="on">
@@ -20,11 +22,13 @@
                 label="Widget Type"
                 required
               ></v-select>
+              <!-- Auto generates all the form fields needed based on widget_settings.js -->
               <v-text-field v-for="info in compForm" v-bind:label="info.label" v-model="info.data" :key="info.label"></v-text-field>
             </v-form>
           </v-row>
         </v-card-text>
         <v-card-actions>
+          <!-- Save or close buttons at the button of the dialog box -->
           <v-spacer></v-spacer>
           <v-btn color="blue darken-1" text @click="dialog=false">Close</v-btn>
           <v-btn color="blue darken-1" text @click="saveForm">Save</v-btn>
@@ -54,6 +58,7 @@ export default {
       formType : this.type
     }
   }, created () {
+    // We want to initialize the widget settings
     var keys = Object.keys(this.api);
     for (var i in keys){
       var key = keys[i];
@@ -64,11 +69,13 @@ export default {
       }
     }
   }, computed : {
+    // Returns the proper form
     compForm : function() {
       return this.form[this.formType];
     }
   },
   methods: {
+    // When you save the form, we want to get all the form data and then emit it to parent to be saved and sent to socket
     saveForm: function() {
       this.dialog = false;
       var formData = {"Name": this.formType, "Config":{}};
