@@ -41,9 +41,10 @@ export default {
       // If the API sent was successful
       if (this.sentData.Status=="success"){
         // Sets all the temperature data
-        this.temp = Math.round(this.sentData.Main.Temp) + "°F";
-        this.temp_min = Math.round(this.sentData.Main.TempMin) + "°F";
-        this.temp_max = Math.round(this.sentData.Main.TempMax) + "°F";
+        var data = this.sentData.Data;
+        this.temp = Math.round(data.Main.Temp) + "°F";
+        this.temp_min = Math.round(data.Main.TempMin) + "°F";
+        this.temp_max = Math.round(data.Main.TempMax) + "°F";
       } else {
         // Shows that we can't reach the API data
         this.temp = "N/A";
