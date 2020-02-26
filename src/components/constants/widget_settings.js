@@ -12,5 +12,9 @@ export var WidgetSettingsForm  = {
 	'system':
 		[
 
-		]
+		],
+  'slideshow':
+    [
+      {"apiLabel": "Speed","label":"Speed*", "dataType": "integer", "data": "5"}
+    ]
 }
