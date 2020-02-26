@@ -13,19 +13,26 @@
           <span class="headline">Widget Settings</span>
         </v-card-title>
         <v-card-text>
-          <v-row>
-            <v-form>
-              <v-select
-                v-model="formType"
-                :items="widgets"
-                :rules="[v => !!v || 'Item is required']"
-                label="Widget Type"
-                required
-              ></v-select>
-              <!-- Auto generates all the form fields needed based on widget_settings.js -->
-              <v-text-field v-for="info in compForm" v-bind:label="info.label" v-model="info.data" :key="info.label"></v-text-field>
-            </v-form>
-          </v-row>
+          <v-form>
+            <v-container>
+              <v-row class="pa-0">
+                <v-select
+                  v-model="formType"
+                  :items="widgets"
+                  :rules="[v => !!v || 'Item is required']"
+                  label="Widget Type"
+                  required
+                ></v-select>
+              </v-row>
+              <v-row v-if="formType=='slideshow'">
+                <v-file-input v-model="imageFiles" multiple counter chips label="Picture Upload" accept="image/*" placeholder="Upload new images"></v-file-input>
+              </v-row>
+                <!-- Auto generates all the form fields needed based on widget_settings.js -->
+              <v-row v-for="info in compForm" class="pa-0" :key="info.label + '_row'">
+                <v-text-field v-bind:label="info.label" v-model="info.data" :key="info.label"></v-text-field>
+              </v-row>
+            </v-container>
+          </v-form>
         </v-card-text>
         <v-card-actions>
           <!-- Save or close buttons at the button of the dialog box -->
@@ -53,9 +60,9 @@ export default {
     // In the future, the form data will be retrieved from the server
     return {
       dialog: false,
-      widgets: ['weather', 'clock'],
       form: JSON.parse(JSON.stringify(WidgetSettingsForm)),
-      formType : this.type
+      formType : this.type,
+      imageFiles: []
     }
   }, created () {
     // We want to initialize the widget settings
@@ -72,6 +79,9 @@ export default {
     // Returns the proper form
     compForm : function() {
       return this.form[this.formType];
+    },
+    widgets : function(){
+      return Object.keys(this.form);
     }
   },
   methods: {
@@ -93,7 +103,9 @@ export default {
             break;
         }
         formData.Config[this.form[this.formType][i].apiLabel] = dataManipulation(this.form[this.formType][i].data);
-
+      }
+      if (this.formType == "slideshow"){
+        formData.photos = this.imageFiles;
       }
       this.$emit('saveForm', formData);
     }

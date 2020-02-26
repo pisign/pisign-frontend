@@ -8,5 +8,9 @@ export var WidgetSettingsForm  = {
   'clock':
     [
       {"apiLabel": "Location","label":"Location*", "dataType": "string", "data": "Local"}
+    ],
+  'slideshow':
+    [
+      {"apiLabel": "Speed","label":"Speed*", "dataType": "integer", "data": "5"}
     ]
 }
