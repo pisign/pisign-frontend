@@ -18,6 +18,9 @@
       <v-col cols="12" class="pa-0">
         <p class="mb-0">CPU Usage: blah %</p>
       </v-col>
+      <v-col cols="12" class="pa-0">
+        <p class="mb-0">CPU Temp: blah </p>
+      </v-col>
     </v-row>
   </v-container>
 </template>
