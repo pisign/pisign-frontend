@@ -35,9 +35,15 @@ export default {
     }
   }, created(){
     // This is here to test the slideshow capabilities
-    this.interval = setInterval(this.changePhoto, this.api.Speed*1000);
+    this.startInterval();
   }, methods :{
-    changePhoto : function(){
+    stopInterval : function() {
+      if (this.interval){
+        clearInterval(this.interval);
+      }
+      this.interval = null;
+    },
+    changePhoto : function (){
       if (this.photos.length <= 0){
         this.image = "";
         return;
@@ -49,6 +55,16 @@ export default {
       }
       // Probably a better way to display images in the future
       this.image = URL.createObjectURL(this.photos[this.photoNum]);
+    },
+    startInterval : function() {
+      if (!this.api.Speed) {
+        this.stopInterval();
+        return;
+      }
+      this.interval = setInterval(
+                        function() { this.changePhoto(); }.bind(this), 
+                        this.api.Speed*1000
+                      );
     }
   },
   watch : {
@@ -64,8 +80,8 @@ export default {
       }
     }, "api.Speed" : function() {
       // If they change the api configuration maybe like speed of slideshow or what category of photos to show
-      clearInterval(this.interval);
-      this.interval = setInterval(this.changePhoto, 1000*this.api.Speed);
+      this.stopInterval();
+      this.startInterval();
     }, edit : function() {
       this.dataHeight = this.edit ? this.height - 80 : this.height;
     }, height : function() {

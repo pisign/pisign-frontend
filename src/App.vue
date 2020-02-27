@@ -55,7 +55,7 @@ export default {
     // Adds a new widget to the layouts.
     addWidget : function() {
       const uuid = this.uuidv4();
-      this.layout.push({"x":0,"y":0,"w":2,"h":5,"i":uuid, "UUID": uuid, "Name": "clock", "Config":{"Location":"America/New_York"}})
+      this.layout.push({"x":0,"y":0,"w":2,"h":5,"i":uuid, "UUID": uuid, "Name": "slideshow", "Config":{"Speed": 5}})
     },
     // Turns off/on edit mode
     editMode : function() {

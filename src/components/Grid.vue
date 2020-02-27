@@ -78,8 +78,7 @@ export default {
     move : function() {
       this.positionUpdate.uuid = -1;
     },
-    moved : function(i, newX, newY) {
-      // newX newY
+    moved : function(i) {
       this.positionUpdate.uuid = i;
     },
     resize : function(i, newH, newW, newHPx, newWPx){
