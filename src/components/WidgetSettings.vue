@@ -53,7 +53,7 @@ export default {
     // In the future, the form data will be retrieved from the server
     return {
       dialog: false,
-      widgets: ['weather', 'clock'],
+      widgets: ['weather', 'clock', 'system'],
       form: JSON.parse(JSON.stringify(WidgetSettingsForm)),
       formType : this.type
     }
