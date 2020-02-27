@@ -24,12 +24,6 @@
     </v-row>
   </v-container>
 </template>
-
-<style>
-  .display-datetime {
-    overflow-wrap: break-word;
-  }
-</style>
 <script>
 export default {
   name: 'SystemInfoWidget',
