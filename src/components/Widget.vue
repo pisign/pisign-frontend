@@ -25,7 +25,7 @@ export default {
     CloseButton: CloseButton,
     clockWidget: ClockWidget,
     weatherWidget: WeatherWidget,
-	systemWidget: SystemInfoWidget
+    systemWidget: SystemInfoWidget
   }, props: {
     index: {
       required: true
