@@ -17,13 +17,15 @@ import CloseButton from './CloseButton.vue';
 import { serverIP } from './constants/server_settings.js'
 import ClockWidget from './widget_types/clock.vue';
 import WeatherWidget from './widget_types/weather.vue';
+import SystemInfoWidget from './widget_types/sysInfo.vue';
 export default {
   name: 'Widget',
   components: {
     WidgetSettings: WidgetSettings,
     CloseButton: CloseButton,
     clockWidget: ClockWidget,
-    weatherWidget: WeatherWidget
+    weatherWidget: WeatherWidget,
+    systemWidget: SystemInfoWidget
   }, props: {
     index: {
       required: true
