@@ -17,6 +17,7 @@ import CloseButton from './CloseButton.vue';
 import { serverIP } from './constants/server_settings.js'
 import ClockWidget from './widget_types/clock.vue';
 import WeatherWidget from './widget_types/weather.vue';
+import TextWidget from './widget_types/text.vue';
 import SystemInfoWidget from './widget_types/sysInfo.vue';
 import SlideshowWidget from './widget_types/slideshow.vue';
 export default {
@@ -26,7 +27,8 @@ export default {
     CloseButton: CloseButton,
     clockWidget: ClockWidget,
     weatherWidget: WeatherWidget,
-    systemWidget: SystemInfoWidget,
+    textWidget: TextWidget,
+    sysinfoWidget: SystemInfoWidget,
     slideshowWidget: SlideshowWidget
   }, props: {
     index: {

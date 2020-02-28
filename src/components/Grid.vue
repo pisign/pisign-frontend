@@ -12,7 +12,7 @@
         :margin="[10, 10]"
         :use-css-transforms="true"
         >
-      <GridItem v-for="(item, index) in layout"
+      <GridItem v-for="(item, index) in layout" v-if="item"
                      :x="item.x"
                      :y="item.y"
                      :w="item.w"
