@@ -19,10 +19,10 @@
                      :h="item.h"
                      :i="item.i"
                      :key="item.UUID"
-                     @move="sendNewPosition(-1)"
-                     @moved="sendNewPosition(index)"
-                     @resize="sendNewPosition(-1)"
-                     @resized="sendNewPosition(index)"
+                     @move="move"
+                     @moved="moved"
+                     @resize="resize"
+                     @resized="resized"
                      class = "v-card v-sheet theme--light blue lighten-4"
                      >
         <!-- Creates a new widget for each of the grid items and passes values -->
@@ -32,6 +32,7 @@
                 :edit="edit"
                 :item="item"
                 :uuid="item.UUID"
+                :photos="photos"
                 :positionUpdate="positionUpdate"
         ></Widget>
       </GridItem>
@@ -52,7 +53,12 @@ export default {
     }
   }, data : function() {
     return {
-      positionUpdate : 0
+      positionUpdate : {
+        'uuid' : -1,
+        'height' : 0,
+        'width' : 0,
+      },
+      photos : []
     }
   },
   components: {
@@ -62,12 +68,29 @@ export default {
   }, methods : {
     // Called when a widget changes the settings
     changeConfig : function(data) {
+      var photos = data.photos;
+      for (var i=0; i<photos.length; i++){
+        this.photos.push(photos[i]);
+      }
       this.$emit('changeConfig', data);
     },
     // Called when a widget moves or is resized
-    sendNewPosition : function(data) {
-      this.positionUpdate = data;
-    }
+    move : function() {
+      this.positionUpdate.uuid = -1;
+    },
+    moved : function(i) {
+      this.positionUpdate.uuid = i;
+    },
+    resize : function(i, newH, newW, newHPx, newWPx){
+        this.positionUpdate.uuid = -1;
+        this.positionUpdate.height = newHPx;
+        this.positionUpdate.width = newWPx;
+    },
+    resized : function(i, newH, newW, newHPx, newWPx){
+        this.positionUpdate.uuid = i;
+        this.positionUpdate.height = newHPx;
+        this.positionUpdate.width = newWPx;
+    },
   }
 }
 </script>
