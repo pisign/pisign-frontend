@@ -77,10 +77,13 @@ export default {
       // Whenever we are updating the API Name
       if (this.Name != data.Name){
         this.Name = data.Name;
-        this.ws.send(JSON.stringify({"Action": "ChangeAPI", "Name": this.Name}));
+        if (this.Config != data.Config){
+          this.Config = data.Config;
+        }
+        this.ws.send(JSON.stringify({"Action": "ChangeAPI", "Name": this.Name, "Config": this.Config}));
       }
       // Whenever we are updating the API Configuration
-      if (this.Config != data.Config){
+      else if (this.Config != data.Config){
         this.Config = data.Config;
         this.ws.send(JSON.stringify({"Action": "ConfigureAPI", "Config": this.Config}));
       }
