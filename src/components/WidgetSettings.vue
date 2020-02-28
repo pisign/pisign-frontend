@@ -24,9 +24,6 @@
                   required
                 ></v-select>
               </v-row>
-              <v-row v-if="formType=='slideshow'">
-                <v-file-input v-model="imageFiles" multiple counter chips label="Picture Upload" accept="image/*" placeholder="Upload new images"></v-file-input>
-              </v-row>
                 <!-- Auto generates all the form fields needed based on widget_settings.js -->
               <v-row v-for="info in compForm" class="pa-0" :key="info.label + '_row'">
                 <v-text-field v-bind:label="info.label" v-model="info.data" :key="info.label"></v-text-field>
@@ -61,8 +58,7 @@ export default {
     return {
       dialog: false,
       form: JSON.parse(JSON.stringify(WidgetSettingsForm)),
-      formType : this.type,
-      imageFiles: []
+      formType : this.type
     }
   }, created () {
     // We want to initialize the widget settings
@@ -103,9 +99,6 @@ export default {
             break;
         }
         formData.Config[this.form[this.formType][i].apiLabel] = dataManipulation(this.form[this.formType][i].data);
-      }
-      if (this.formType == "slideshow"){
-        formData.photos = this.imageFiles;
       }
       this.$emit('saveForm', formData);
     }

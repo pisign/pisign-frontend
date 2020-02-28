@@ -12,6 +12,8 @@
       <v-sheet>
         <!-- Widget grid -->
         <Grid @changeConfig="changeConfig" :layout="layout" :edit="edit"></Grid>
+        <!-- Floating button to upload new photos -->
+        <PhotoManager :edit="edit"></PhotoManager>
         <!-- Floating button for adding a new widget -->
         <v-btn v-if="edit" color="pink" dark fixed bottom right fab @click="addWidget">
           <v-icon>mdi-plus</v-icon>
@@ -25,10 +27,12 @@
 import Grid from './components/Grid.vue'
 import { serverIP } from './components/constants/server_settings.js'
 import axios from 'axios';
+import PhotoManager from './components/PhotoManager.vue';
 export default {
   name: 'app',
   components: {
-    Grid
+    Grid,
+    PhotoManager
   },
   data: function() {
     return {
@@ -55,7 +59,7 @@ export default {
     // Adds a new widget to the layouts.
     addWidget : function() {
       const uuid = this.uuidv4();
-      this.layout.push({"x":0,"y":0,"w":2,"h":5,"i":uuid, "UUID": uuid, "Name": "slideshow", "Config":{"Speed": 5}})
+      this.layout.push({"x":0,"y":0,"w":2,"h":5,"i":uuid, "UUID": uuid, "Name": "clock", "Config":{"Location": "America/New_York"}})
     },
     // Turns off/on edit mode
     editMode : function() {
@@ -65,7 +69,7 @@ export default {
     changeConfig : function(data) {
       this.layout[data.index].Name = data.Name;
       this.layout[data.index].Config = JSON.parse(JSON.stringify(data.Config));
-    }
+    },
   }
 }
 </script>

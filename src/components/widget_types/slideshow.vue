@@ -54,7 +54,7 @@ export default {
         this.photoNum += 1;
       }
       // Probably a better way to display images in the future
-      this.image = URL.createObjectURL(this.photos[this.photoNum]);
+      this.image = this.photos[this.photoNum];
     },
     startInterval : function() {
       if (!this.api.Speed) {
@@ -62,7 +62,7 @@ export default {
         return;
       }
       this.interval = setInterval(
-                        function() { this.changePhoto(); }.bind(this), 
+                        function() { this.changePhoto(); }.bind(this),
                         this.api.Speed*1000
                       );
     }

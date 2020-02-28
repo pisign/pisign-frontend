@@ -89,9 +89,6 @@ export default {
       }
       // Passes to App.vue that we are changing the configuration so that we can change layout array
       var sendData = {'Name': this.Name, 'Config': this.Config, 'index': this.index}
-      if (data.photos){
-        sendData.photos = data.photos;
-      }
       this.$emit('changeConfig',sendData);
     },
     createSocket : function(){
