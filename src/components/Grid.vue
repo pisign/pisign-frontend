@@ -12,7 +12,7 @@
         :margin="[10, 10]"
         :use-css-transforms="true"
         >
-      <GridItem v-for="(item, index) in layout" v-if="item"
+      <GridItem v-for="(item, index) in layout"
                      :x="item.x"
                      :y="item.y"
                      :w="item.w"
@@ -68,10 +68,6 @@ export default {
   }, methods : {
     // Called when a widget changes the settings
     changeConfig : function(data) {
-      var photos = data.photos;
-      for (var i=0; i<photos.length; i++){
-        this.photos.push(photos[i]);
-      }
       this.$emit('changeConfig', data);
     },
     // Called when a widget moves or is resized
