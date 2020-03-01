@@ -16,5 +16,9 @@ export var WidgetSettingsForm  = {
   'slideshow':
     [
       {"apiLabel": "Speed","label":"Speed*", "dataType": "integer", "data": "5"}
+    ],
+    'twitter':
+    [
+      {"apiLabel": "User", "label": "User ID*", "dataType": "string", "data": ""}
     ]
 }

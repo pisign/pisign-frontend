@@ -19,6 +19,8 @@ import ClockWidget from './widget_types/clock.vue';
 import WeatherWidget from './widget_types/weather.vue';
 import SystemInfoWidget from './widget_types/sysInfo.vue';
 import SlideshowWidget from './widget_types/slideshow.vue';
+import TwitterWidget from './widget_types/twitter.vue';
+
 export default {
   name: 'Widget',
   components: {
@@ -27,7 +29,8 @@ export default {
     clockWidget: ClockWidget,
     weatherWidget: WeatherWidget,
     systemWidget: SystemInfoWidget,
-    slideshowWidget: SlideshowWidget
+    slideshowWidget: SlideshowWidget,
+    twitterWidget: TwitterWidget
   }, props: {
     index: {
       required: true
