@@ -9,15 +9,17 @@
   </v-container>
 </template>
 <script>
+import {serverIP } from '../constants/server_settings.js';
 export default {
   name: 'SlideshowWidget',
   data: function(){
     return {
       image : "",
-      dataHeight: this.edit ? this.height - 80 : this.height,
-      dataWidth: this.edit ? this.width * 0.8 : this.width,
+      dataHeight: (!this.height || this.height<100) ? "90%" : (this.edit ? this.height - 80 : this.height),
+      dataWidth: (!this.width || this.width<100) ? "90%" : (this.edit ? this.width * 0.8 : this.width),
       photoNum: 1,
-      interval : null
+      interval : null,
+      photos: []
     }
   }, props:{
     sentData:{
@@ -29,8 +31,6 @@ export default {
     }, width : {
       required : true
     }, edit : {
-      required : true
-    }, photos : {
       required : true
     }
   }, created(){
@@ -54,7 +54,7 @@ export default {
         this.photoNum += 1;
       }
       // Probably a better way to display images in the future
-      this.image = this.photos[this.photoNum];
+      this.image = "http://" + serverIP  + this.photos[this.photoNum];
     },
     startInterval : function() {
       if (!this.api.Speed) {
@@ -72,10 +72,12 @@ export default {
     sentData : function(){
       // If the API was successful
       if (this.sentData.Status == "success"){
-        // var data = this.sentData.Data;
+        var data = this.sentData.Data;
+        this.photos = JSON.parse(JSON.stringify(data.FileImages));
       }
        // If the API sent failed in some way
       else if (this.sentData.Status == "failure") {
+        this.photos = []
         this.image = "";
       }
     }, "api.Speed" : function() {

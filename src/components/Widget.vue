@@ -4,10 +4,10 @@
     <CloseButton v-if="edit" :index="index" :layout="layout" :websocket="ws"></CloseButton>
     <!-- Widget rendering -->
     <v-card-text class="pa-0">
-      <component :photos="photos" :edit="edit" :height="height" :width="width" :api="Config" :sentData="sendData" :is="Name+'Widget'"></component>
+      <component :edit="edit" :height="height" :width="width" :api="Config" :sentData="sendData" :is="Name+'Widget'"></component>
     </v-card-text>
     <!-- Widget Settings Button Component -->
-    <WidgetSettings v-if="edit" @saveForm="saveConfig" :type="Name" :api="Config"></WidgetSettings>
+    <WidgetSettings v-if="edit" :tags="tags" @saveForm="saveConfig" :type="Name" :api="Config"></WidgetSettings>
   </v-container>
 </template>
 
@@ -43,8 +43,6 @@ export default {
       required: true
     }, uuid : {
       required: true
-    }, photos : {
-      required: true
     }
   }, data : function() {
     return {
@@ -53,7 +51,8 @@ export default {
       Config: this.item.Config,
       ws : null,
       height : this.positionUpdate.height,
-      width : this.positionUpdate.width
+      width : this.positionUpdate.width,
+      tags : []
     }
   },
   created() {
@@ -104,6 +103,9 @@ export default {
         this.onmessage = function(evt) {
           try {
             var data = JSON.parse(evt.data);
+            if (data.Data.UniqueTags) {
+              vue_data.tags = JSON.parse(JSON.stringify(data.Data.UniqueTags));
+            }
             vue_data.sendData = data;
           } catch {
             vue_data.sendData = {"Status": "failure", "msg": evt.data}
