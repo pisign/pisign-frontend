@@ -24,12 +24,19 @@
                   required
                 ></v-select>
               </v-row>
-              <v-row v-if="formType=='slideshow'">
-                <v-file-input v-model="imageFiles" multiple counter chips label="Picture Upload" accept="image/*" placeholder="Upload new images"></v-file-input>
-              </v-row>
                 <!-- Auto generates all the form fields needed based on widget_settings.js -->
               <v-row v-for="info in compForm" class="pa-0" :key="info.label + '_row'">
-                <v-text-field v-bind:label="info.label" v-model="info.data" :key="info.label"></v-text-field>
+                <v-autocomplete v-if="info.form_type=='autocomplete'"
+                  v-model="info.data"
+                  :key="info.label"
+                  :items="info.items"
+                  color="white"
+                  :label="info.label"
+                  :multiple="info.multiple"
+                  placeholder="Start typing to Search"
+                ></v-autocomplete>
+                <v-text-field v-else v-bind:label="info.label" v-model="info.data" :key="info.label"></v-text-field>
+
               </v-row>
             </v-container>
           </v-form>
@@ -54,6 +61,8 @@ export default {
       required: true
     }, api :{
       required: true
+    }, tags : {
+      required: true
     }
   },
   data : function() {
@@ -61,12 +70,12 @@ export default {
     return {
       dialog: false,
       form: JSON.parse(JSON.stringify(WidgetSettingsForm)),
-      formType : this.type,
-      imageFiles: []
+      formType : this.type
     }
   }, created () {
     // We want to initialize the widget settings
     var keys = Object.keys(this.api);
+    this.form.slideshow[1].items = this.tags.sort();
     for (var i in keys){
       var key = keys[i];
       for (var j in this.form[this.formType]){
@@ -83,6 +92,10 @@ export default {
     widgets : function(){
       return Object.keys(this.form);
     }
+  }, watch : {
+    tags : function() {
+      this.form.slideshow[1].items = this.tags.sort();
+    }
   },
   methods: {
     // When you save the form, we want to get all the form data and then emit it to parent to be saved and sent to socket
@@ -98,14 +111,14 @@ export default {
           case "string":
             dataManipulation = function(data){return data;}
             break;
+          case "obs_to_list":
+            dataManipulation = function(data){ return JSON.parse(JSON.stringify(data))}
+            break;
           default:
             dataManipulation = function(data){return data;}
             break;
         }
         formData.Config[this.form[this.formType][i].apiLabel] = dataManipulation(this.form[this.formType][i].data);
-      }
-      if (this.formType == "slideshow"){
-        formData.photos = this.imageFiles;
       }
       this.$emit('saveForm', formData);
     }

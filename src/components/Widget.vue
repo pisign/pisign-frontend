@@ -4,10 +4,10 @@
     <CloseButton v-if="edit" :index="index" :layout="layout" :websocket="ws"></CloseButton>
     <!-- Widget rendering -->
     <v-card-text class="pa-0">
-      <component :photos="photos" :edit="edit" :height="height" :width="width" :api="Config" :sentData="sendData" :is="Name+'Widget'"></component>
+      <component :edit="edit" :height="height" :width="width" :api="Config" :sentData="sendData" :is="Name+'Widget'"></component>
     </v-card-text>
     <!-- Widget Settings Button Component -->
-    <WidgetSettings v-if="edit" @saveForm="saveConfig" :type="Name" :api="Config"></WidgetSettings>
+    <WidgetSettings v-if="edit" :tags="tags" @saveForm="saveConfig" :type="Name" :api="Config"></WidgetSettings>
   </v-container>
 </template>
 
@@ -17,6 +17,7 @@ import CloseButton from './CloseButton.vue';
 import { serverIP } from './constants/server_settings.js'
 import ClockWidget from './widget_types/clock.vue';
 import WeatherWidget from './widget_types/weather.vue';
+import TextWidget from './widget_types/text.vue';
 import SystemInfoWidget from './widget_types/sysInfo.vue';
 import SlideshowWidget from './widget_types/slideshow.vue';
 import TwitterWidget from './widget_types/twitter.vue';
@@ -28,9 +29,10 @@ export default {
     CloseButton: CloseButton,
     clockWidget: ClockWidget,
     weatherWidget: WeatherWidget,
-    systemWidget: SystemInfoWidget,
     slideshowWidget: SlideshowWidget,
-    twitterWidget: TwitterWidget
+    twitterWidget: TwitterWidget,
+    textWidget: TextWidget,
+    sysinfoWidget: SystemInfoWidget,
   }, props: {
     index: {
       required: true
@@ -44,8 +46,6 @@ export default {
       required: true
     }, uuid : {
       required: true
-    }, photos : {
-      required: true
     }
   }, data : function() {
     return {
@@ -54,7 +54,8 @@ export default {
       Config: this.item.Config,
       ws : null,
       height : this.positionUpdate.height,
-      width : this.positionUpdate.width
+      width : this.positionUpdate.width,
+      tags : []
     }
   },
   created() {
@@ -78,18 +79,18 @@ export default {
       // Whenever we are updating the API Name
       if (this.Name != data.Name){
         this.Name = data.Name;
-        this.ws.send(JSON.stringify({"Action": "ChangeAPI", "Name": this.Name}));
+        if (this.Config != data.Config){
+          this.Config = data.Config;
+        }
+        this.ws.send(JSON.stringify({"Action": "ChangeAPI", "Name": this.Name, "Config": this.Config}));
       }
       // Whenever we are updating the API Configuration
-      if (this.Config != data.Config){
+      else if (this.Config != data.Config){
         this.Config = data.Config;
         this.ws.send(JSON.stringify({"Action": "ConfigureAPI", "Config": this.Config}));
       }
       // Passes to App.vue that we are changing the configuration so that we can change layout array
       var sendData = {'Name': this.Name, 'Config': this.Config, 'index': this.index}
-      if (data.photos){
-        sendData.photos = data.photos;
-      }
       this.$emit('changeConfig',sendData);
     },
     createSocket : function(){
@@ -105,6 +106,9 @@ export default {
         this.onmessage = function(evt) {
           try {
             var data = JSON.parse(evt.data);
+            if (data.Data.UniqueTags) {
+              vue_data.tags = JSON.parse(JSON.stringify(data.Data.UniqueTags));
+            }
             vue_data.sendData = data;
           } catch {
             vue_data.sendData = {"Status": "failure", "msg": evt.data}

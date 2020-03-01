@@ -32,7 +32,6 @@
                 :edit="edit"
                 :item="item"
                 :uuid="item.UUID"
-                :photos="photos"
                 :positionUpdate="positionUpdate"
         ></Widget>
       </GridItem>
@@ -57,8 +56,7 @@ export default {
         'uuid' : -1,
         'height' : 0,
         'width' : 0,
-      },
-      photos : []
+      }
     }
   },
   components: {
@@ -68,10 +66,6 @@ export default {
   }, methods : {
     // Called when a widget changes the settings
     changeConfig : function(data) {
-      var photos = data.photos;
-      for (var i=0; i<photos.length; i++){
-        this.photos.push(photos[i]);
-      }
       this.$emit('changeConfig', data);
     },
     // Called when a widget moves or is resized
@@ -82,14 +76,14 @@ export default {
       this.positionUpdate.uuid = i;
     },
     resize : function(i, newH, newW, newHPx, newWPx){
-        this.positionUpdate.uuid = -1;
-        this.positionUpdate.height = newHPx;
-        this.positionUpdate.width = newWPx;
+      this.positionUpdate.uuid = -1;
+      this.positionUpdate.height = newHPx;
+      this.positionUpdate.width = newWPx;
     },
     resized : function(i, newH, newW, newHPx, newWPx){
-        this.positionUpdate.uuid = i;
-        this.positionUpdate.height = newHPx;
-        this.positionUpdate.width = newWPx;
+      this.positionUpdate.uuid = i;
+      this.positionUpdate.height = newHPx;
+      this.positionUpdate.width = newWPx;
     },
   }
 }
