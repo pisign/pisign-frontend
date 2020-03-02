@@ -87,7 +87,7 @@ export default {
         this.ws.send(JSON.stringify({"Action": "ConfigureAPI", "Config": this.Config}));
       }
       // Passes to App.vue that we are changing the configuration so that we can change layout array
-      var sendData = {'Name': this.Name, 'Config': this.Config, 'index': this.index}
+      var sendData = {'Name': this.Name, 'Config': this.Config, 'index': this.index, 'widgetColor': data.widgetColor}
       this.$emit('changeConfig',sendData);
     },
     createSocket : function(){
@@ -104,7 +104,8 @@ export default {
           try {
             var data = JSON.parse(evt.data);
             if (data.Data.UniqueTags) {
-              vue_data.tags = JSON.parse(JSON.stringify(data.Data.UniqueTags));
+              var tags = JSON.parse(JSON.stringify(data.Data.UniqueTags))
+              vue_data.tags = tags.sort();
             }
             vue_data.sendData = data;
           } catch {

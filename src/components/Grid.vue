@@ -23,7 +23,8 @@
                      @moved="moved"
                      @resize="resize"
                      @resized="resized"
-                     class = "v-card v-sheet theme--light blue lighten-4"
+                     class = "v-card v-sheet theme--light lighten-4"
+                     :class = "widgetColors[index] ? widgetColors[index] : 'white'"
                      >
         <!-- Creates a new widget for each of the grid items and passes values -->
         <Widget @changeConfig="changeConfig"
@@ -56,6 +57,9 @@ export default {
         'uuid' : -1,
         'height' : 0,
         'width' : 0,
+      },
+      widgetColors : {
+
       }
     }
   },
@@ -66,6 +70,7 @@ export default {
   }, methods : {
     // Called when a widget changes the settings
     changeConfig : function(data) {
+      this.widgetColors[data.index] = data.widgetColor
       this.$emit('changeConfig', data);
     },
     // Called when a widget moves or is resized

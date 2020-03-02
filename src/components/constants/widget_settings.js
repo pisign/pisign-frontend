@@ -22,6 +22,6 @@ export var WidgetSettingsForm  = {
   'slideshow':
     [
       {"form_type":"text-field", "apiLabel": "Speed", "label":"Speed*", "dataType": "integer", "data": "5"},
-      {"form_type":"autocomplete", "multiple": true, "items": [], "apiLabel": "IncludedTags", "label":"Tag*", "dataType": "obs_to_list", "data": ""}
+      {"form_type":"autocomplete", "multiple": true, "items": [], "apiLabel": "IncludedTags", "label":"Tag*", "dataType": "list", "data": ""}
     ]
 }

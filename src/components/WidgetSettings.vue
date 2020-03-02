@@ -24,6 +24,15 @@
                   required
                 ></v-select>
               </v-row>
+              <v-row class="pa-0">
+                <v-select
+                  v-model="widgetColor"
+                  :items="['blue','red','yellow']"
+                  :rules="[v => !!v || 'Item is required']"
+                  label="Widget Background Color"
+                  required
+                ></v-select>
+              </v-row>
                 <!-- Auto generates all the form fields needed based on widget_settings.js -->
               <v-row v-for="info in compForm" class="pa-0" :key="info.label + '_row'">
                 <v-autocomplete v-if="info.form_type=='autocomplete'"
@@ -70,12 +79,13 @@ export default {
     return {
       dialog: false,
       form: JSON.parse(JSON.stringify(WidgetSettingsForm)),
-      formType : this.type
+      formType : this.type,
+      widgetColor : ""
     }
   }, created () {
     // We want to initialize the widget settings
     var keys = Object.keys(this.api);
-    this.form.slideshow[1].items = this.tags.sort();
+    this.form.slideshow[1].items = this.tags;
     for (var i in keys){
       var key = keys[i];
       for (var j in this.form[this.formType]){
@@ -94,7 +104,7 @@ export default {
     }
   }, watch : {
     tags : function() {
-      this.form.slideshow[1].items = this.tags.sort();
+      this.form.slideshow[1].items = this.tags;
     }
   },
   methods: {
@@ -102,6 +112,7 @@ export default {
     saveForm: function() {
       this.dialog = false;
       var formData = {"Name": this.formType, "Config":{}};
+      formData.widgetColor = this.widgetColor;
       for (var i=0; i<this.form[this.formType].length; i++){
         var dataManipulation;
         switch (this.form[this.formType][i].dataType){
@@ -110,9 +121,6 @@ export default {
             break;
           case "string":
             dataManipulation = function(data){return data;}
-            break;
-          case "obs_to_list":
-            dataManipulation = function(data){ return JSON.parse(JSON.stringify(data))}
             break;
           default:
             dataManipulation = function(data){return data;}
