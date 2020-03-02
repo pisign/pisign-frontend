@@ -13,7 +13,7 @@
         <!-- Widget grid -->
         <Grid @changeConfig="changeConfig" :layout="layout" :edit="edit"></Grid>
         <!-- Floating button to upload new photos -->
-        <PhotoManager :edit="edit"></PhotoManager>
+        <PhotoManager v-if="edit"></PhotoManager>
         <!-- Floating button for adding a new widget -->
         <v-btn v-if="edit" color="pink" dark fixed bottom right fab @click="addWidget">
           <v-icon>mdi-plus</v-icon>

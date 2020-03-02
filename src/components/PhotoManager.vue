@@ -2,7 +2,7 @@
   <div class="text-center">
     <v-dialog v-model="photos_dialog" width="40%">
       <template v-slot:activator="{ on }">
-        <v-btn v-on="on" v-if="edit" color="blue" dark fixed bottom left fab>
+        <v-btn v-on="on" color="blue" dark fixed bottom left fab>
           <v-icon>mdi-image-multiple</v-icon>
         </v-btn>
       </template>
