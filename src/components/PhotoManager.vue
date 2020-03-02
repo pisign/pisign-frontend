@@ -44,11 +44,6 @@ import { serverIP } from './constants/server_settings.js';
 import axios from 'axios';
 export default {
   name:'PhotoManager',
-  props : {
-    edit : {
-      required: true
-    }
-  },
   data : function(){
     return {
       photos_dialog: false,
