@@ -23,7 +23,8 @@
                      @moved="moved"
                      @resize="resize"
                      @resized="resized"
-                     class = "v-card v-sheet theme--light blue lighten-4"
+                     class = "v-card v-sheet theme--light lighten-4"
+                     :class="{'blue':edit, 'white':!edit, 'elevation-0':!edit}"
                      >
         <!-- Creates a new widget for each of the grid items and passes values -->
         <Widget @changeConfig="changeConfig"
