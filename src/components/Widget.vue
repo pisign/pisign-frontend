@@ -20,6 +20,8 @@ import WeatherWidget from './widget_types/weather.vue';
 import TextWidget from './widget_types/text.vue';
 import SystemInfoWidget from './widget_types/sysInfo.vue';
 import SlideshowWidget from './widget_types/slideshow.vue';
+import TwitterWidget from './widget_types/twitter.vue';
+
 export default {
   name: 'Widget',
   components: {
@@ -27,9 +29,10 @@ export default {
     CloseButton: CloseButton,
     clockWidget: ClockWidget,
     weatherWidget: WeatherWidget,
+    slideshowWidget: SlideshowWidget,
+    twitterWidget: TwitterWidget,
     textWidget: TextWidget,
     sysinfoWidget: SystemInfoWidget,
-    slideshowWidget: SlideshowWidget
   }, props: {
     index: {
       required: true

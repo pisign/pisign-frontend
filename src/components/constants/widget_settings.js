@@ -23,5 +23,11 @@ export var WidgetSettingsForm  = {
     [
       {"form_type":"text-field", "apiLabel": "Speed", "label":"Speed*", "dataType": "integer", "data": "5"},
       {"form_type":"autocomplete", "multiple": true, "items": [], "apiLabel": "IncludedTags", "label":"Tag*", "dataType": "obs_to_list", "data": ""}
+    ],
+    'twitter':
+    [
+      {"form_type":"text-field", "apiLabel": "UserId", "label":"User ID*", "dataType": "string", "data": ""},
+      {"form_type":"text-field", "apiLabel": "NumberTweets", "label":"Number of Tweets", "dataType": "integer", "data": 1},
+      {"form_type":"text-field", "apiLabel": "APIKey", "label":"API Key*", "dataType": "string", "data": ""},
     ]
 }
