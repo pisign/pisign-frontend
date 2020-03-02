@@ -104,7 +104,8 @@ export default {
           try {
             var data = JSON.parse(evt.data);
             if (data.Data.UniqueTags) {
-              vue_data.tags = JSON.parse(JSON.stringify(data.Data.UniqueTags));
+              var tags = JSON.parse(JSON.stringify(data.Data.UniqueTags));
+              vue_data.tags = tags.sort();
             }
             vue_data.sendData = data;
           } catch {
