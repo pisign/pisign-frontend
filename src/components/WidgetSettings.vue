@@ -12,8 +12,8 @@
         <v-card-title>
           <span class="headline">Widget Settings</span>
         </v-card-title>
-        <v-card-text>
-          <v-form>
+        <v-form>
+          <v-card-text>
             <v-container>
               <v-row class="pa-0">
                 <v-select
@@ -39,14 +39,14 @@
 
               </v-row>
             </v-container>
-          </v-form>
-        </v-card-text>
-        <v-card-actions>
-          <!-- Save or close buttons at the button of the dialog box -->
-          <v-spacer></v-spacer>
-          <v-btn color="blue darken-1" text @click="dialog=false">Close</v-btn>
-          <v-btn color="blue darken-1" text @click="saveForm">Save</v-btn>
-        </v-card-actions>
+          </v-card-text>
+          <v-card-actions>
+            <!-- Save or close buttons at the button of the dialog box -->
+            <v-spacer></v-spacer>
+            <v-btn color="blue darken-1" text @click="dialog=false">Close</v-btn>
+            <v-btn type="submit" color="blue darken-1" text @click="saveForm">Save</v-btn>
+          </v-card-actions>
+        </v-form>
       </v-card>
     </v-dialog>
   </v-footer>
