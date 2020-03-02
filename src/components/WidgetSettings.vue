@@ -75,7 +75,7 @@ export default {
   }, created () {
     // We want to initialize the widget settings
     var keys = Object.keys(this.api);
-    this.form.slideshow[1].items = this.tags.sort();
+    this.form.slideshow[1].items = this.tags;
     for (var i in keys){
       var key = keys[i];
       for (var j in this.form[this.formType]){
@@ -94,7 +94,7 @@ export default {
     }
   }, watch : {
     tags : function() {
-      this.form.slideshow[1].items = this.tags.sort();
+      this.form.slideshow[1].items = this.tags;
     }
   },
   methods: {
@@ -110,9 +110,6 @@ export default {
             break;
           case "string":
             dataManipulation = function(data){return data;}
-            break;
-          case "obs_to_list":
-            dataManipulation = function(data){ return JSON.parse(JSON.stringify(data))}
             break;
           default:
             dataManipulation = function(data){return data;}
