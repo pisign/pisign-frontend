@@ -42,7 +42,10 @@
                     {user: "ND", text: "News: ND opening new computer lab", likes: 311, shares: 42, imgSrc: "https://static.nd.edu/images/webclips/default/webclip-1024.png"}
                 ],
                 numberTweets: this.api.NumberTweets,
-                apiKey: this.api.APIKey,
+                consumerKey: this.api.ConsumerKey,
+                consumerSecret: this.api.ConsumerSecret,
+                accessToken: this.api.AccessToken,
+                accessSecret: this.api.AccessSecret,
                 userId: this.api.UserId,
             }
         },
@@ -54,15 +57,14 @@
             sentData: function() {
 
             },
-            "api.NumberTweets": function() {
-                this.numberTweets = this.api.NumberTweets
-            },
-            "api.APIKey": function() {
-                this.apiKey = this.api.APIKey
-            },
-            "api.UserId": function() {
-                this.userId = this.api.userId
-            },
+            api : function() {
+              this.numberTweets = this.api.NumberTweets;
+              this.consumerKey = this.api.ConsumerKey;
+              this.consumerSecret = this.api.ConsumerSecret;
+              this.accessToken = this.api.AccessToken;
+              this.accessSecret = this.api.AccessSecret;
+              this.userId = this.api.UserId;
+            }
         },
         computed: {
             tweets_sliced: function() {
