@@ -26,8 +26,8 @@ export var WidgetSettingsForm  = {
     ],
     'twitter':
     [
-      {"form_type":"text-field", "apiLabel": "UserId", "label":"User ID*", "dataType": "string", "data": ""},
-      {"form_type":"text-field", "apiLabel": "NumberTweets", "label":"Number of Tweets", "dataType": "integer", "data": 1},
+      {"form_type":"text-field", "apiLabel": "UserHandle", "label":"User Handle*", "dataType": "string", "data": ""},
+      {"form_type":"text-field", "apiLabel": "TweetCount", "label":"Number of Tweets", "dataType": "integer", "data": 1},
       {"form_type":"text-field", "apiLabel": "ConsumerKey", "label":"Consumer Key*", "dataType": "string", "data": ""},
       {"form_type":"text-field", "apiLabel": "ConsumerSecret", "label":"Consumer Secret*", "dataType": "string", "data": ""},
       {"form_type":"text-field", "apiLabel": "AccessToken", "label":"Access Token*", "dataType": "string", "data": ""},

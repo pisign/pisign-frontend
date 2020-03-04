@@ -1,14 +1,15 @@
 <template>
     <div>
-        <v-card class="mb-10" v-for="tweet in tweets_sliced" v-bind:key="tweet.text">
+        <v-card class="mb-10" v-for="(tweet, index) in tweets_sliced" v-bind:key="index">
             <v-card-title>
                 <v-list-item-avatar color="grey darken-3">
                 <v-img
                     class="elevation-6"
-                    :src="tweet.imgSrc"
+                    :src="tweet.user.profile_image_url_https"
                 ></v-img>
                 </v-list-item-avatar>
-                <div>{{userId}}</div>
+                <div>{{tweet.user.name}}</div>
+                <div><h6>   @{{tweet.user.screen_name}}</h6></div>
             </v-card-title>
 
             <v-card-text class="font-weight-bold">
@@ -22,9 +23,9 @@
                     justify="end"
                     >
                     <v-icon class="mr-1">mdi-heart</v-icon>
-                    <span class="subheading mr-2">{{tweet.likes}}</span>
+                    <span class="subheading mr-2">{{tweet.favorite_count}}</span>
                     <v-icon class="mr-1">mdi-share-variant</v-icon>
-                    <span class="subheading">{{tweet.shares}}</span>
+                    <span class="subheading">{{tweet.retweet_count}}</span>
                     </v-row>
                 </v-list-item>
             </v-card-actions>
@@ -37,16 +38,13 @@
         name: 'TwitterWidget',
         data: function() {
             return {
-                tweets: [
-                    {user: "ND", text: "Notre Dame seniors build amazing open source projects!", likes: 256, shares: 24, imgSrc: "https://static.nd.edu/images/webclips/default/webclip-1024.png"},
-                    {user: "ND", text: "News: ND opening new computer lab", likes: 311, shares: 42, imgSrc: "https://static.nd.edu/images/webclips/default/webclip-1024.png"}
-                ],
-                numberTweets: this.api.NumberTweets,
+                tweets: [],
+                userHandle: this.api.UserHandle,
+                numberTweets: this.api.TweetCount,
                 consumerKey: this.api.ConsumerKey,
                 consumerSecret: this.api.ConsumerSecret,
                 accessToken: this.api.AccessToken,
                 accessSecret: this.api.AccessSecret,
-                userId: this.api.UserId,
             }
         },
         props: {
@@ -55,15 +53,19 @@
         },
         watch: {
             sentData: function() {
-
+                if (this.sentData.Status == "success") {
+                    this.tweets = this.sentData.Data.Tweets;
+                } else if (this.sentData.Status == "failure") {
+                    this.tweets = []
+                }
             },
             api : function() {
-              this.numberTweets = this.api.NumberTweets;
+              this.numberTweets = this.api.TweetCount;
               this.consumerKey = this.api.ConsumerKey;
               this.consumerSecret = this.api.ConsumerSecret;
               this.accessToken = this.api.AccessToken;
               this.accessSecret = this.api.AccessSecret;
-              this.userId = this.api.UserId;
+              this.userHandle = this.api.UserHandle;
             }
         },
         computed: {
