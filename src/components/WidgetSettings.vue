@@ -44,7 +44,7 @@
             <!-- Save or close buttons at the button of the dialog box -->
             <v-spacer></v-spacer>
             <v-btn color="blue darken-1" text @click="dialog=false">Close</v-btn>
-            <v-btn type="submit" color="blue darken-1" text @click="saveForm">Save</v-btn>
+            <v-btn color="blue darken-1" text @click="saveForm">Save</v-btn>
           </v-card-actions>
         </v-form>
       </v-card>
