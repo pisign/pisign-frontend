@@ -12,7 +12,7 @@
         <v-card-title>
           <span class="headline">Widget Settings</span>
         </v-card-title>
-        <v-form>
+        <v-form @keyup.native.enter="saveForm" ref="widget_form">
           <v-card-text>
             <v-container>
               <v-row class="pa-0">
@@ -32,10 +32,11 @@
                   :items="info.items"
                   color="white"
                   :label="info.label"
+                  :rules="[v => !!v || 'Item is required']"
                   :multiple="info.multiple"
                   placeholder="Start typing to Search"
                 ></v-autocomplete>
-                <v-text-field v-else v-bind:label="info.label" v-model="info.data" :key="info.label"></v-text-field>
+                <v-text-field v-else v-bind:label="info.label" :rules="[v => !!v || 'Item is required']" required v-model="info.data" :key="info.label"></v-text-field>
 
               </v-row>
             </v-container>
@@ -44,7 +45,7 @@
             <!-- Save or close buttons at the button of the dialog box -->
             <v-spacer></v-spacer>
             <v-btn color="blue darken-1" text @click="dialog=false">Close</v-btn>
-            <v-btn type="submit" color="blue darken-1" text @click="saveForm">Save</v-btn>
+            <v-btn color="blue darken-1" text @click="saveForm">Save</v-btn>
           </v-card-actions>
         </v-form>
       </v-card>
@@ -100,6 +101,9 @@ export default {
   methods: {
     // When you save the form, we want to get all the form data and then emit it to parent to be saved and sent to socket
     saveForm: function() {
+      if (!this.$refs.widget_form.validate()) {
+        return;
+      }
       this.dialog = false;
       var formData = {"Name": this.formType, "Config":{}};
       for (var i=0; i<this.form[this.formType].length; i++){
