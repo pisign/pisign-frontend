@@ -62,21 +62,14 @@
             "api.UserId": function() {
                 this.userId = this.api.UserId
             },
-            "api.NumberTweets": function() {
-                this.numberTweets = this.api.NumberTweets
-            },
-            "api.ConsumerKey": function() {
-                this.consumerKey = this.api.ConsumerKey
-            },
-            "api.ConsumerSecret": function() {
-                this.consumerSecret = this.api.ConsumerSecret
-            },
-            "api.AccessToken": function() {
-                this.accessToken = this.api.AccessToken
-            },
-            "api.AccessSecret": function() {
-                this.accessSecret = this.api.AccessSecret
-            },
+            api : function() {
+              this.numberTweets = this.api.NumberTweets;
+              this.consumerKey = this.api.ConsumerKey;
+              this.consumerSecret = this.api.ConsumerSecret;
+              this.accessToken = this.api.AccessToken;
+              this.accessSecret = this.api.AccessSecret;
+              this.userId = this.api.UserId;
+            }
         },
         computed: {
             tweets_sliced: function() {
