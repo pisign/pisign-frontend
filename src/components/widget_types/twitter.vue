@@ -40,7 +40,7 @@
             return {
                 tweets: [],
                 userHandle: this.api.UserHandle,
-                numberTweets: this.api.NumberTweets,
+                numberTweets: this.api.TweetCount,
                 consumerKey: this.api.ConsumerKey,
                 consumerSecret: this.api.ConsumerSecret,
                 accessToken: this.api.AccessToken,
@@ -60,7 +60,7 @@
                 }
             },
             api : function() {
-              this.numberTweets = this.api.NumberTweets;
+              this.numberTweets = this.api.TweetCount;
               this.consumerKey = this.api.ConsumerKey;
               this.consumerSecret = this.api.ConsumerSecret;
               this.accessToken = this.api.AccessToken;
