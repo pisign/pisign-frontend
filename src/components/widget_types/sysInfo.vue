@@ -10,21 +10,25 @@
         <p class="mb-0">Memory Available: {{ mem_left }}</p>
       </v-col>
       <v-col cols="12" class="pa-0">
-        <p class="mb-0">Memory Used: {{ mem_per }}%</p>
+        <p class="mb-0">Memory Used: {{ mem_used }}</p>
       </v-col>
       <v-col cols="12" class="pa-0">
-        <p class="mb-0">Disk Space Available: blah</p>
+        <p class="mb-0">Memory Usage: {{ mem_per }}%</p>
       </v-col>
       <v-col cols="12" class="pa-0">
-        <p class="mb-0">CPU Usage: blah %</p>
+        <p class="mb-0">Disk Space Available: {{ disk_free }}</p>
       </v-col>
       <v-col cols="12" class="pa-0">
-        <p class="mb-0">CPU Temp: blah </p>
+        <p class="mb-0">Disk Space Used: {{ disk_used }}</p>
+      </v-col>
+      <v-col cols="12" class="pa-0">
+        <p class="mb-0">Disk Usage: {{ disk_per }}%</p>
       </v-col>
     </v-row>
   </v-container>
 </template>
 <script>
+import bytes from 'bytes'
 export default {
   name: 'SystemInfoWidget',
 	props: {
@@ -35,6 +39,10 @@ export default {
     return {
       mem_left: 0,
       mem_per: 0,
+      disk_used: 0, 
+      disk_free: 0,
+      disk_total: 0,
+      disk_per: 0
     }
   },
   watch : {
@@ -43,8 +51,13 @@ export default {
       // If the API was successful
       if (this.sentData.Status == "success"){
         var data = this.sentData.Data;
-        this.mem_left = data.Total - data.Used;
-        this.mem_per = Math.round(data.UsedPercent*100)/100;
+        this.mem_left = bytes(data.MemTotal - data.MemUsed);
+        this.mem_used = bytes(data.MemUsed);
+        this.mem_per = Math.round(data.MemUsedPercent*100)/100;
+        this.disk_used = bytes(data.DiskUsed);
+        this.disk_total = bytes(data.DiskTotal);
+        this.disk_free = bytes(data.DiskFree);
+        this.disk_per = Math.round(data.DiskUsedPercent*100)/100;
       }
        // If the API sent failed in some way
       else if (this.sentData.Status == "failure") {
