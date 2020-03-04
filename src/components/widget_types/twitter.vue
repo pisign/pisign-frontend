@@ -1,6 +1,6 @@
 <template>
     <div>
-        <v-card class="mb-10" v-for="tweet in tweets_sliced" v-bind:key="tweet.text">
+        <v-card class="mb-10" v-for="(tweet, index) in tweets_sliced" v-bind:key="index">
             <v-card-title>
                 <v-list-item-avatar color="grey darken-3">
                 <v-img
