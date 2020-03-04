@@ -39,7 +39,7 @@
         data: function() {
             return {
                 tweets: [],
-                userId: this.api.UserId,
+                userHandle: this.api.UserHandle,
                 numberTweets: this.api.NumberTweets,
                 consumerKey: this.api.ConsumerKey,
                 consumerSecret: this.api.ConsumerSecret,
@@ -59,16 +59,13 @@
                     this.tweets = []
                 }
             },
-            "api.UserId": function() {
-                this.userId = this.api.UserId
-            },
             api : function() {
               this.numberTweets = this.api.NumberTweets;
               this.consumerKey = this.api.ConsumerKey;
               this.consumerSecret = this.api.ConsumerSecret;
               this.accessToken = this.api.AccessToken;
               this.accessSecret = this.api.AccessSecret;
-              this.userId = this.api.UserId;
+              this.userHandle = this.api.UserHandle;
             }
         },
         computed: {
