@@ -39,6 +39,7 @@ export default {
     return {
       mem_left: 0,
       mem_per: 0,
+      mem_used: 0,
       disk_used: 0, 
       disk_free: 0,
       disk_total: 0,
