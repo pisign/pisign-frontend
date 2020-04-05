@@ -35,8 +35,21 @@ export default {
     }
   }, created(){
     // This is here to test the slideshow capabilities
+    this.updateData();
     this.startInterval();
-  }, methods :{
+  }, methods : {
+    updateData : function() {
+      // If the API was successful
+      if (this.sentData.Status == "success"){
+        var data = this.sentData.Data;
+        this.photos = JSON.parse(JSON.stringify(data.FileImages));
+      }
+       // If the API sent failed in some way
+      else if (this.sentData.Status == "failure") {
+        this.photos = []
+        this.image = "";
+      }
+    },
     stopInterval : function() {
       if (this.interval){
         clearInterval(this.interval);
@@ -70,16 +83,7 @@ export default {
   watch : {
     // Run function on change of the sent data API
     sentData : function(){
-      // If the API was successful
-      if (this.sentData.Status == "success"){
-        var data = this.sentData.Data;
-        this.photos = JSON.parse(JSON.stringify(data.FileImages));
-      }
-       // If the API sent failed in some way
-      else if (this.sentData.Status == "failure") {
-        this.photos = []
-        this.image = "";
-      }
+      this.updateData();
     }, "api.Speed" : function() {
       // If they change the api configuration maybe like speed of slideshow or what category of photos to show
       this.stopInterval();

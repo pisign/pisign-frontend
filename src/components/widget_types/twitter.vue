@@ -50,14 +50,20 @@
         props: {
             sentData: Object,
             api: Object,
+        }, created(){
+            this.updateData();
+        }, methods : {
+            updateData : function(){
+              if (this.sentData.Status == "success") {
+                  this.tweets = this.sentData.Data.Tweets;
+              } else if (this.sentData.Status == "failure") {
+                  this.tweets = []
+              }
+            }
         },
         watch: {
             sentData: function() {
-                if (this.sentData.Status == "success") {
-                    this.tweets = this.sentData.Data.Tweets;
-                } else if (this.sentData.Status == "failure") {
-                    this.tweets = []
-                }
+                this.updateData();
             },
             api : function() {
               this.numberTweets = this.api.TweetCount;

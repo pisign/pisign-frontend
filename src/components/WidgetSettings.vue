@@ -32,7 +32,6 @@
                   :items="info.items"
                   color="white"
                   :label="info.label"
-                  :rules="[v => !!v || 'Item is required']"
                   :multiple="info.multiple"
                   placeholder="Start typing to Search"
                 ></v-autocomplete>
