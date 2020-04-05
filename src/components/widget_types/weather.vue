@@ -35,9 +35,10 @@ export default {
       temp_min: "",
       temp_max: ""
     }
-  }, watch: {
-    // If the sent API changed
-    sentData: function(){
+  }, created(){
+    this.updateData();
+  }, methods : {
+    updateData : function(){
       // If the API sent was successful
       if (this.sentData.Status=="success"){
         // Sets all the temperature data
@@ -51,6 +52,11 @@ export default {
         this.temp_min = "N/A";
         this.temp_max = "";
       }
+    }
+  },watch: {
+    // If the sent API changed
+    sentData: function(){
+      this.updateData();
     }
   }
 }
