@@ -16,15 +16,10 @@ npm run serve
 npm run build
 ```
 
-### Lints and fixes files
-```
-npm run lint
-```
-
 ## Runs unit test
 ```
 npm run test:unit
 ```
 
-### Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).
+## Additional information
+Make sure to check the Wiki for more information on how to add new widgets and for further information on using this application!
