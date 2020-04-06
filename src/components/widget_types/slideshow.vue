@@ -4,7 +4,7 @@
       <v-img :src="image" :max-height='dataHeight' :max-width='dataWidth'></v-img>
     </v-row>
     <v-row v-else class="pa-0" align="center" justify="center">
-      <p>No photos uploaded</p>
+      <p id="errorDisplay">No photos uploaded</p>
     </v-row>
   </v-container>
 </template>
@@ -17,7 +17,7 @@ export default {
       image : "",
       dataHeight: (!this.height || this.height<100) ? "90%" : (this.edit ? this.height - 80 : this.height),
       dataWidth: (!this.width || this.width<100) ? "90%" : (this.edit ? this.width * 0.8 : this.width),
-      photoNum: 1,
+      photoNum: 0,
       interval : null,
       photos: []
     }
@@ -85,15 +85,15 @@ export default {
     sentData : function(){
       this.updateData();
     }, "api.Speed" : function() {
-      // If they change the api configuration maybe like speed of slideshow or what category of photos to show
+      // If they change the api configuration for speed of slideshow
       this.stopInterval();
       this.startInterval();
     }, edit : function() {
-      this.dataHeight = this.edit ? this.height - 80 : this.height;
+      this.dataHeight = (!this.height || this.height<100) ? "90%" : (this.edit ? this.height - 80 : this.height);
     }, height : function() {
-      this.dataHeight = this.edit ? this.height - 80 : this.height;
+      this.dataHeight = (!this.height || this.height<100) ? "90%" : (this.edit ? this.height - 80 : this.height);
     }, width : function() {
-      this.dataWidth = this.width;
+      this.dataWidth = (!this.width || this.width<100) ? "90%" : (this.edit ? this.width * 0.8 : this.width);
     }
   }
 }

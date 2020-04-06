@@ -22,4 +22,4 @@ npm run test:unit
 ```
 
 ## Additional information
-Make sure to check the Wiki for more information on how to add new widgets and for further information on using this application!
+Make sure to check the Wiki for more information on how to add new widgets and for further information on using and developing on this application!
