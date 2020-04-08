@@ -1,4 +1,5 @@
 <template>
+<!-- Displays widget content -->
     <div>
         <v-card class="mb-10" v-for="(tweet, index) in tweets_sliced" v-bind:key="index">
             <v-card-title>

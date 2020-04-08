@@ -1,5 +1,6 @@
 <template>
   <v-container>
+	<!-- Displays widget content -->
     <v-row class="text-center title">
       <v-col cols="12" class="pa-0">
         <p id="titleDisplay">{{ title }}</p>
