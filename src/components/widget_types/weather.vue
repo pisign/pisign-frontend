@@ -1,4 +1,5 @@
 <template>
+<!-- Displays widget content -->
   <v-container>
     <v-row class="text-center">
       <v-col cols="12" class="pa-0">

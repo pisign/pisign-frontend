@@ -1,5 +1,6 @@
 <template>
   <v-container>
+  <!-- Displays widget content -->
     <v-row class="text-center">
       <v-col cols="12" class="pa-0">
         <p id="cityDisplay">{{ city }}</p>

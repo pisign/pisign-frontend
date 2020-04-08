@@ -1,5 +1,6 @@
 <template>
   <v-container class="pa-0">
+  <!-- Displays widget content -->
     <v-row v-if="image" class="pa-0" align="center" justify="center">
       <v-img :src="image" :max-height='dataHeight' :max-width='dataWidth'></v-img>
     </v-row>
