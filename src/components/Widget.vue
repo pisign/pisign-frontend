@@ -12,6 +12,7 @@
 </template>
 
 <script>
+// import each widget from its file dst
 import WidgetSettings from './WidgetSettings.vue';
 import CloseButton from './CloseButton.vue';
 import { serverIP } from './constants/server_settings.js'
@@ -25,6 +26,7 @@ import TwitterWidget from './widget_types/twitter.vue';
 export default {
   name: 'Widget',
   components: {
+		// componet name : import widget name (from above)
     WidgetSettings: WidgetSettings,
     CloseButton: CloseButton,
     clockWidget: ClockWidget,
