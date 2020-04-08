@@ -1,4 +1,5 @@
 <template>
+<!-- Displays close button -->
   <v-col cols="12" class="align-start pa-0">
     <v-btn icon aria-label="Close" @click="close">
       <v-icon small dark class="material-icons close-icon">close</v-icon>
