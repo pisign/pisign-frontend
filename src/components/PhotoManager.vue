@@ -1,4 +1,5 @@
 <template>
+  <!-- Displays photos -->
   <div class="text-center">
     <v-dialog v-model="photos_dialog" width="40%">
       <template v-slot:activator="{ on }">
