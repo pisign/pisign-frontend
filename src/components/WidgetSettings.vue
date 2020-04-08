@@ -1,4 +1,5 @@
 <template>
+  <!-- Creates the widget card -->
   <!-- Adds a footer to the widget card -->
   <v-footer absolute color="transparent" class="pa-0" style="z-index:0">
     <!-- Generates a dialog when needed -->
