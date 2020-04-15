@@ -1,0 +1,20 @@
+on: 
+  pull_request:
+  push:
+
+jobs: 
+  compile:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@master
+      - name: Compile and Build
+        run: npm install && npm run build
+      - uses: meeDamian/github-release@2.0
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          tag: v0.0.1
+          allow_override: true
+          name: Pisign Frontend Release
+          body: The source code is packaged into zip files, while the compiled html / css / js / assets are avaliable in dist.tgz
+          files: dist/
+          gzip: folders
