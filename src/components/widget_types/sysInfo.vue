@@ -50,7 +50,7 @@ export default {
   }, methods : {
     updateData : function(){
       // If the API was successful
-      if (this.sentData && this.sentData.Status == "success"){
+      if (this.sentData && this.sentData.Status && this.sentData.Status == "success"){
         var data = this.sentData.Data;
         this.mem_left = bytes(data.MemTotal - data.MemUsed);
         this.mem_used = bytes(data.MemUsed);

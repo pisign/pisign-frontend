@@ -40,7 +40,7 @@ export default {
   }, methods : {
     updateData : function(){
       // If the API sent was successful
-      if (this.sentData.Status=="success"){
+      if (this.sentData && this.sentData.Status && this.sentData.Status=="success"){
         // Sets all the temperature data
         var data = this.sentData.Data;
         this.temp = Math.round(data.Main.Temp) + "°F";

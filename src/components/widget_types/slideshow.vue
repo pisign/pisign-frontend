@@ -40,6 +40,11 @@ export default {
   }, methods : {
     updateData : function() {
       // If the API was successful
+      if (!this.sentData || !this.sentData.Status){
+        this.photos = [];
+        this.image = "";
+        return;
+      }
       if (this.sentData.Status == "success"){
         var data = this.sentData.Data;
         this.photos = JSON.parse(JSON.stringify(data.FileImages));
