@@ -55,7 +55,7 @@
             this.updateData();
         }, methods : {
             updateData : function(){
-              if (this.sentData && this.sentData.Status == "success") {
+              if (this.sentData && this.sentData.Status && this.sentData.Status == "success") {
                   this.tweets = this.sentData.Data.Tweets;
               } else {
                   this.tweets = []

@@ -54,7 +54,7 @@ export default {
   }, methods : {
     updateData : function() {
       // If the API was successful
-      if (this.sentData && this.sentData.Status == "success"){
+      if (this.sentData && this.sentData.Status && this.sentData.Status == "success"){
         var data = this.sentData.Data;
         this.timestamp = data.Time > 0 ? data.Time : "";
       }

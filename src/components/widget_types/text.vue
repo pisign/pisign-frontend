@@ -41,7 +41,7 @@ export default {
       else {
         this.title = "";
         this.text = "ERROR in parsing"
-        if (this.sentData.msg){
+        if (this.sentData && this.sentData.msg){
           this.text = "ERROR: " + this.sentData.msg;
         }
       }
